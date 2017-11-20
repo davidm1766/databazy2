@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27004.2009
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DatabazyProjekt", "DatabazyProjekt\DatabazyProjekt.csproj", "{F5C86170-8C28-414E-82D3-8F06778239B1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aplication", "DatabazyProjekt\Aplication.csproj", "{F5C86170-8C28-414E-82D3-8F06778239B1}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core", "Core\Core.csproj", "{3A2B40DD-769F-4C90-9AA7-D32DFCC8D8F3}"
 EndProject
