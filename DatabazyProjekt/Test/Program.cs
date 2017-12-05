@@ -22,7 +22,7 @@ namespace Test
     }
     public class Class1
     {
-        private string _connectionString = "Data Source=localhost;User Id=meno;Password=*******;";
+        private string _connectionString = "Data Source=localhost;User Id=david;Password=Mimada176;";
         private OracleConnection conn;
 
 
@@ -45,7 +45,7 @@ namespace Test
             };
 
             cmd.Parameters.Add("ddd", OracleDbType.Int32, ParameterDirection.Input).Value = 123;
-            cmd.Parameters.Add("dd1", OracleDbType.Int32, ParameterDirection.Input).Value = 1;
+            cmd.Parameters.Add("dd1", OracleDbType.Int32, ParameterDirection.Output);
             cmd.Parameters.Add("parameter1", OracleDbType.Int32).Direction = ParameterDirection.ReturnValue;
            
             try
@@ -64,7 +64,35 @@ namespace Test
         }
 
 
+        public void test_sys_refcursor()
+        {
+            var cmd = new OracleCommand()
+            {
+                Connection = conn,
+                CommandText = "sys_refcursor_example",
+                CommandType = CommandType.StoredProcedure,
+                BindByName = true
 
+            };
+
+            cmd.Parameters.Add("result", OracleDbType.RefCursor).Direction = ParameterDirection.ReturnValue;
+
+            try
+            {
+                conn.Open();
+                cmd.ExecuteNonQuery();
+                OracleDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    Console.WriteLine(string.Format("{0}, {1}", reader.GetValue(0), reader.GetValue(1)));
+                }
+                reader.Close();
+            }
+            finally
+            {
+                conn.Close();
+            }
+        }
 
         public void TryConnect()
         {
