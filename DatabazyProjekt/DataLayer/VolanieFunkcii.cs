@@ -24,38 +24,29 @@ namespace DataLayer
             _connection.Close();
         }
 
+  
         /// <summary>
         ///     pridanie vozňa do systému a určenie jeho polohy
         /// </summary>
         public void VlozNovyVozen(int idVlastnik,
                                   int idTypVozna,
-                                  int idAktualVlak,
-                                  int idAktualPoloha,
-                                  int idAktualKolaj,
-                                  DateTime aktualVlakOd,
-                                  DateTime aktualPolohaOd,
-                                  DateTime aktualKolajOd) {
+                                  int idAktualPoloha)
+        {
 
-           
+
             var cmd = new OracleCommand
             {
                 Connection = _connection,
-                CommandText = "insert_vozen",
+                CommandText = "gui_insert_vozen",
                 CommandType = CommandType.StoredProcedure,
                 BindByName = true
 
             };
-            
+
             cmd.Parameters.Add("pa_id_vlastnik", OracleDbType.Int32, ParameterDirection.Input).Value = idVlastnik;
             cmd.Parameters.Add("pa_id_typ_vozna", OracleDbType.Int32, ParameterDirection.Input).Value = idTypVozna;
-            cmd.Parameters.Add("pa_id_aktual_vlak", OracleDbType.Int32, ParameterDirection.Input).Value = idAktualVlak;
             cmd.Parameters.Add("pa_id_aktual_poloha", OracleDbType.Int32, ParameterDirection.Input).Value = idAktualPoloha;
-            cmd.Parameters.Add("pa_id_aktual_kolaj", OracleDbType.Int32, ParameterDirection.Input).Value = idAktualKolaj;
-
-            cmd.Parameters.Add("pa_aktual_vlak_od", OracleDbType.Date, ParameterDirection.Input).Value = aktualVlakOd;
-            cmd.Parameters.Add("pa_aktual_poloha_od", OracleDbType.Date, ParameterDirection.Input).Value = aktualPolohaOd;
-            cmd.Parameters.Add("pa_aktual_kolaj_od", OracleDbType.Date, ParameterDirection.Input).Value = aktualKolajOd;
-
+            cmd.Parameters.Add("pa_id", OracleDbType.Int32, ParameterDirection.Output);
 
             try
             {
@@ -67,7 +58,62 @@ namespace DataLayer
                 _connection.Close();
             }
 
-            
+
+        }
+
+        public void ZaradVOzenDoVlaku(int idVozna, int idVlaku)
+        {
+            var cmd = new OracleCommand
+            {
+                Connection = _connection,
+                CommandText = "gui_zarad_vozen_do_vlaku",
+                CommandType = CommandType.StoredProcedure,
+                BindByName = true
+
+            };
+
+            cmd.Parameters.Add("pa_id_vozna", OracleDbType.Int32, ParameterDirection.Input).Value = idVozna;
+            cmd.Parameters.Add("pa_id_vlaku", OracleDbType.Int32, ParameterDirection.Input).Value = idVlaku;
+
+            try
+            {
+                _connection.Open();
+                cmd.ExecuteNonQuery();
+
+            }
+            finally
+            {
+                _connection.Close();
+            }
+
+        }
+        
+        /// <summary>
+        ///     Vyradenie vozna z prevadzky
+        /// </summary>
+        /// <param name="idVozna"></param>
+        public void VyradVozen(int idVozna)
+        {
+            var cmd = new OracleCommand
+            {
+                Connection = _connection,
+                CommandText = "gui_insert_vozen",
+                CommandType = CommandType.StoredProcedure,
+                BindByName = true
+
+            };
+
+            cmd.Parameters.Add("pa_id_vozna", OracleDbType.Int32, ParameterDirection.Input).Value = idVozna;
+
+            try
+            {
+                _connection.Open();
+                cmd.ExecuteNonQuery();
+            }
+            finally
+            {
+                _connection.Close();
+            }
         }
 
 	    public void DajPolohuVozna(int idVozna, out double zemDlzka, out double zemSirka)
@@ -96,5 +142,6 @@ namespace DataLayer
 			    _connection.Close();
 		    }
 		}		    
+        
     }
 }
