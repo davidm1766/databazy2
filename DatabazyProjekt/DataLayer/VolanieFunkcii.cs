@@ -5,6 +5,7 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Oracle.ManagedDataAccess.Types;
 
 namespace DataLayer
 {
@@ -28,14 +29,18 @@ namespace DataLayer
         /// </summary>
         public void VlozNovyVozen(int idVlastnik,
                                   int idTypVozna,
-                                  int idAktualPoloha)
-        {
+                                  int idAktualVlak,
+                                  int idAktualPoloha,
+                                  int idAktualKolaj,
+                                  DateTime aktualVlakOd,
+                                  DateTime aktualPolohaOd,
+                                  DateTime aktualKolajOd) {
 
            
             var cmd = new OracleCommand
             {
                 Connection = _connection,
-                CommandText = "gui_insert_vozen",
+                CommandText = "insert_vozen",
                 CommandType = CommandType.StoredProcedure,
                 BindByName = true
 
@@ -43,8 +48,14 @@ namespace DataLayer
             
             cmd.Parameters.Add("pa_id_vlastnik", OracleDbType.Int32, ParameterDirection.Input).Value = idVlastnik;
             cmd.Parameters.Add("pa_id_typ_vozna", OracleDbType.Int32, ParameterDirection.Input).Value = idTypVozna;
+            cmd.Parameters.Add("pa_id_aktual_vlak", OracleDbType.Int32, ParameterDirection.Input).Value = idAktualVlak;
             cmd.Parameters.Add("pa_id_aktual_poloha", OracleDbType.Int32, ParameterDirection.Input).Value = idAktualPoloha;
-            cmd.Parameters.Add("pa_id", OracleDbType.Int32, ParameterDirection.Output);
+            cmd.Parameters.Add("pa_id_aktual_kolaj", OracleDbType.Int32, ParameterDirection.Input).Value = idAktualKolaj;
+
+            cmd.Parameters.Add("pa_aktual_vlak_od", OracleDbType.Date, ParameterDirection.Input).Value = aktualVlakOd;
+            cmd.Parameters.Add("pa_aktual_poloha_od", OracleDbType.Date, ParameterDirection.Input).Value = aktualPolohaOd;
+            cmd.Parameters.Add("pa_aktual_kolaj_od", OracleDbType.Date, ParameterDirection.Input).Value = aktualKolajOd;
+
 
             try
             {
@@ -59,59 +70,31 @@ namespace DataLayer
             
         }
 
-        public void ZaradVOzenDoVlaku(int idVozna, int idVlaku)
-        {
-            var cmd = new OracleCommand
-            {
-                Connection = _connection,
-                CommandText = "gui_zarad_vozen_do_vlaku",
-                CommandType = CommandType.StoredProcedure,
-                BindByName = true
+	    public void DajPolohuVozna(int idVozna, out double zemDlzka, out double zemSirka)
+	    {
+			var cmd = new OracleCommand
+			{
+				Connection = _connection,
+				CommandText = "daj_polohu_vozna",
+				CommandType = CommandType.StoredProcedure,
+				BindByName = true
+			};
 
-            };
+		    cmd.Parameters.Add("pa_id_vozna", OracleDbType.Int32, ParameterDirection.Input).Value = idVozna;
+		    cmd.Parameters.Add("pa_zem_sirka", OracleDbType.Decimal, ParameterDirection.Output);
+		    cmd.Parameters.Add("pa_zem_dlzka", OracleDbType.Decimal, ParameterDirection.Output);
 
-            cmd.Parameters.Add("pa_id_vozna", OracleDbType.Int32, ParameterDirection.Input).Value = idVozna;
-            cmd.Parameters.Add("pa_id_vlaku", OracleDbType.Int32, ParameterDirection.Input).Value = idVlaku;
-
-            try
-            {
-                _connection.Open();
-                cmd.ExecuteNonQuery();
-                
-            }
-            finally
-            {
-                _connection.Close();
-            }
-            
-        }
-
-        /// <summary>
-        ///     Vyradenie vozna z prevadzky
-        /// </summary>
-        /// <param name="idVozna"></param>
-        public void VyradVozen(int idVozna)
-        {
-            var cmd = new OracleCommand
-            {
-                Connection = _connection,
-                CommandText = "gui_insert_vozen",
-                CommandType = CommandType.StoredProcedure,
-                BindByName = true
-
-            };
-
-            cmd.Parameters.Add("pa_id_vozna", OracleDbType.Int32, ParameterDirection.Input).Value = idVozna;
-
-            try
-            {
-                _connection.Open();
-                cmd.ExecuteNonQuery();
-            }
-            finally
-            {
-                _connection.Close();
-            }
-        }
+		    try
+		    {
+				_connection.Open();   							    
+			    cmd.ExecuteNonQuery();
+			    zemDlzka = (double) (OracleDecimal) cmd.Parameters["pa_zem_dlzka"].Value;
+			    zemSirka = (double) (OracleDecimal) cmd.Parameters["pa_zem_sirka"].Value;				
+		    }
+		    finally
+		    {
+			    _connection.Close();
+		    }
+		}		    
     }
 }
