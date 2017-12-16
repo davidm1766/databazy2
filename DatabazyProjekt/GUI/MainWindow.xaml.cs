@@ -2,6 +2,7 @@
 using Core.Models;
 using System;
 using System.Collections.ObjectModel;
+using System.Data;
 using System.Windows;
 
 namespace GUI
@@ -46,12 +47,16 @@ namespace GUI
 
 
 
+
+
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             //pridanie noveho vozna
             CoreApp.Instance.PridajNovyVozen(Vozen);
 
         }
+
+
 
 
 
@@ -130,5 +135,11 @@ namespace GUI
                 MessageBox.Show(ex.Message);
             }
         }
-    }
+
+		// vypisy
+	    private void PrintButton_OnClick(object sender, RoutedEventArgs e)
+	    {
+		    ReportDataGrid.ItemsSource = CoreApp.Instance.VypisAktualnuPolohuVoznov(null, null).Tables[0].DefaultView;
+	    }
+	}
 }

@@ -1,5 +1,6 @@
 ﻿
 using System;
+using System.Data;
 using Core.Models;
 using DataLayer;
 
@@ -55,5 +56,11 @@ namespace Core
         {
             _volanieFunkcii.VyradVozenZVlaku(idVozna);
         }
+
+		// vypisy
+	    public DataSet VypisAktualnuPolohuVoznov(string nazovVlastnika, string nazovTypu)
+	    {
+		    return _volanieFunkcii.DajPolohuVoznov(nazovVlastnika, nazovTypu);
+	    }
     }
 }
