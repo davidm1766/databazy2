@@ -123,9 +123,8 @@ namespace GUI
             try
             {
                 var idVozna = int.Parse(TXTIDVoznaVyradenieZVlaku.Text);
-                var idVlaku = int.Parse(TXTIDVlakuVyradenie.Text);
-                CoreApp.Instance.VyradVozenZVlaku(idVozna, idVlaku);
-                MessageBox.Show("Vozeň bol úspešne vyradený");
+                CoreApp.Instance.VyradVozenZVlaku(idVozna);
+                MessageBox.Show("Vozeň bol úspešne vyradený z vlaku");
             }
             catch (Exception ex) {
                 MessageBox.Show(ex.Message);

@@ -61,6 +61,30 @@ namespace DataLayer
 
         }
 
+        public void VyradVozenZVlaku(int idVozna)
+        {
+            var cmd = new OracleCommand
+            {
+                Connection = _connection,
+                CommandText = "gui_vyrad_vozen_z_vlaku",
+                CommandType = CommandType.StoredProcedure,
+                BindByName = true
+
+            };
+
+            cmd.Parameters.Add("pa_id_vozna", OracleDbType.Int32, ParameterDirection.Input).Value = idVozna;
+
+            try
+            {
+                _connection.Open();
+                cmd.ExecuteNonQuery();
+            }
+            finally
+            {
+                _connection.Close();
+            }
+        }
+
         public void ZaradVozenDoVlaku(int idVozna, int idVlaku)
         {
             var cmd = new OracleCommand

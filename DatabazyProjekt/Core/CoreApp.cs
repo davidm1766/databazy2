@@ -51,9 +51,9 @@ namespace Core
             _volanieFunkcii.ZaradVozenDoVlaku(idVozna, idVlaku);
         }
 
-        public void VyradVozenZVlaku(int idVozna, int idVlaku)
+        public void VyradVozenZVlaku(int idVozna)
         {
-            throw new NotImplementedException();
+            _volanieFunkcii.VyradVozenZVlaku(idVozna);
         }
     }
 }
