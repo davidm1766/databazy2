@@ -152,8 +152,7 @@ namespace GUI
                 MessageBox.Show(ex.Message);
             }
         }
-    }
-        }
+    
 
 		// vypisy
 	    private void PrintButton_OnClick(object sender, RoutedEventArgs e)
