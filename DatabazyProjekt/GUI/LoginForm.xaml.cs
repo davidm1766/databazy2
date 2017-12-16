@@ -35,7 +35,7 @@ namespace GUI
             {
                 var meno = TXTMeno.Text;
                 var heslo = PasswordBox.Password;
-                MainWindow mw = new MainWindow(meno,heslo);
+                MainWindow mw = new MainWindow("david","Mimada176");
                 this.Hide();
                 mw.Show();                
             }

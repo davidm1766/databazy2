@@ -1,5 +1,6 @@
 ﻿using Core;
 using Core.Models;
+using System;
 using System.Collections.ObjectModel;
 using System.Windows;
 
@@ -85,6 +86,50 @@ namespace GUI
             ret.Add(new Poloha() { IdPoloha = 3, AktualnaPolohaLatitude = 10.1, AktualnaPolohaLongitude = 10.2 });
             ret.Add(new Poloha() { IdPoloha = 4, AktualnaPolohaLatitude = 5.1, AktualnaPolohaLongitude = 5.2 });
             return ret;
+        }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            //vyradenie vozna z prevadzky
+            try
+            {
+                var idVozna =int.Parse(TXTIDVoznaVyradenie.Text);
+                CoreApp.Instance.VyradVozen(idVozna);
+                MessageBox.Show("Vozeň bol úspešne vyradený");
+            } catch (Exception ex) {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void Button_Click_2(object sender, RoutedEventArgs e)
+        {
+            //zarad vozen do vlaku
+            try
+            {
+                var idVozna = int.Parse(TXTIDVoznaZaradenieDoVlaku.Text);
+                var idVlaku = int.Parse(TXTIDVlakuZaradenie.Text);
+                CoreApp.Instance.ZaradVozenDoVlaku(idVozna, idVlaku);
+                MessageBox.Show("Vozeň bol úspešne zaradený");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void Button_Click_3(object sender, RoutedEventArgs e)
+        {
+            //vyrad vozen z vlaku
+            try
+            {
+                var idVozna = int.Parse(TXTIDVoznaVyradenieZVlaku.Text);
+                var idVlaku = int.Parse(TXTIDVlakuVyradenie.Text);
+                CoreApp.Instance.VyradVozenZVlaku(idVozna, idVlaku);
+                MessageBox.Show("Vozeň bol úspešne vyradený");
+            }
+            catch (Exception ex) {
+                MessageBox.Show(ex.Message);
+            }
         }
     }
 }

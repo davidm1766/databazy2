@@ -32,17 +32,28 @@ namespace Core
         public void PridajNovyVozen(Vozen novyVozen) {
             _volanieFunkcii.VlozNovyVozen(novyVozen.VlastnikVozna.IdVlastnika,
                                           novyVozen.TypVozna.IdTypuVozna,
-                                          -1,
-                                          novyVozen.AktualnaPoloha.IdPoloha,
-                                          -1,
-                                          DateTime.Now,
-                                          DateTime.Now,
-                                          DateTime.Now);
+                                          novyVozen.AktualnaPoloha.IdPoloha
+                                          );
         }
 
         public static void Register(string meno, string heslo)
         {
             _instance = new CoreApp(meno,heslo);
+        }
+
+        public void VyradVozen(int idVozna)
+        {
+            _volanieFunkcii.VyradVozen(idVozna);
+        }
+
+        public void ZaradVozenDoVlaku(int idVozna, int idVlaku)
+        {
+            _volanieFunkcii.ZaradVOzenDoVlaku(idVozna, idVlaku);
+        }
+
+        public void VyradVozenZVlaku(int idVozna, int idVlaku)
+        {
+            throw new NotImplementedException();
         }
     }
 }

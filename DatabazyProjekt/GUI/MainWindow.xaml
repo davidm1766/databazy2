@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GUI"
         mc:Ignorable="d"
-        Title="MainWindow" Height="354.06" Width="533.933">
+        Title="MainWindow" Height="437.703" Width="766.996">
     <Grid>
         <TabControl Grid.Column="0" Grid.Row="0">
             <TabItem Header="Pridanie vozňa">
@@ -38,16 +38,84 @@
                     <ComboBox Name="CMBVlastnik" ItemsSource="{Binding Vlastnici, Mode=TwoWay}" DisplayMemberPath="NazovVlastnika" SelectedItem="{Binding Vozen.VlastnikVozna}" Margin="5"  Grid.Row="0" Grid.Column="1" />
                     <ComboBox Name="CMBTypVozna" ItemsSource="{Binding TypyVoznov, Mode=TwoWay}" DisplayMemberPath="NazovTypuVozna" SelectedItem="{Binding Vozen.TypVozna}" Margin="5" Grid.Row="1" Grid.Column="1" />
                     <ComboBox Name="CMBPoloha" ItemsSource="{Binding Polohy, Mode=TwoWay}" DisplayMemberPath="PolohaSpolu" SelectedItem="{Binding Vozen.AktualnaPoloha}" Margin="5" Grid.Row="2" Grid.Column="1"/>
-                    
-                    
+
+
                     <Button Margin="5" Grid.Row="5" Grid.Column="1" Click="Button_Click" >Pridaj vozeň</Button>
                 </Grid>
             </TabItem>
-            <TabItem Header="TabItem">
-                <Grid Background="#FFE5E5E5"/>
+            <TabItem Header="Vozen vyradanie/zaradenie">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="0.7*"/>
+                        <ColumnDefinition Width="0.7*"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+                    <Label Grid.Row="0" Grid.Column="0" Content="ID vozňa"/>
+                    <TextBox Name="TXTIDVoznaVyradenie" Grid.Row="0" Grid.Column="1" Margin="5"/>
+                    <Button Margin="5" Grid.Row="1" Grid.Column="1" Click="Button_Click_1" Content="Vyraď vozeň"/>
+
+                    <Label Grid.Row="2" Grid.Column="0" Content="ID vozňa"/>
+                    <TextBox Name="TXTIDVoznaZaradenieDoVlaku" Grid.Row="2" Grid.Column="1" Margin="5"/>
+                    <Label Grid.Row="3" Grid.Column="0" Content="ID vlaku"/>
+                    <TextBox Name="TXTIDVlakuZaradenie" Grid.Row="3" Grid.Column="1" Margin="5"/>
+                    <Button Margin="5" Grid.Row="4" Grid.Column="1" Content="Zaraď vozeň do vlaku" Click="Button_Click_2"/>
+
+                    <Label Grid.Row="5" Grid.Column="0" Content="ID vozňa"/>
+                    <TextBox Name="TXTIDVoznaVyradenieZVlaku" Grid.Row="5" Grid.Column="1" Margin="5"/>
+                    <Label Grid.Row="6" Grid.Column="0" Content="ID vlaku"/>
+                    <TextBox Name="TXTIDVlakuVyradenie" Grid.Row="6" Grid.Column="1" Margin="5"/>
+                    <Button Margin="5" Grid.Row="7" Grid.Column="1" Content="Vyraď vozeň z vlaku" Click="Button_Click_3"/>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Zmena polohy vozňa">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="153*"/>
+                        <ColumnDefinition Width="229*"/>
+                    </Grid.ColumnDefinitions>
+                    <Label Grid.Row="0" Grid.Column="0">
+                        Vozeň Id
+                    </Label>
+
+                    <Label Grid.Row="1" Grid.Column="0">
+                        Id koľaje z
+                    </Label>
+
+                    <Label Grid.Row="2" Grid.Column="0">
+                        Id koľaje na
+                    </Label>
+
+                    <TextBox Name="TXTVozenIdPresun" Margin="5"  Grid.Row="0" Grid.Column="1" />
+                    <TextBox Name="TXTKolajZPresun" Margin="5" Grid.Row="1" Grid.Column="1" />
+                    <TextBox Name="TXTKolajNaPresun" Margin="5" Grid.Row="2" Grid.Column="1" />
+
+
+                    <Button Margin="5" Grid.Row="3" Grid.Column="1" Click="Button_Click" >Presuň vlak</Button>
+                </Grid>
+                
             </TabItem>
         </TabControl>
-        
+
 
     </Grid>
 </Window>
