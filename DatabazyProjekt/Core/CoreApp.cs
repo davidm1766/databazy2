@@ -48,7 +48,7 @@ namespace Core
 
         public void ZaradVozenDoVlaku(int idVozna, int idVlaku)
         {
-            _volanieFunkcii.ZaradVOzenDoVlaku(idVozna, idVlaku);
+            _volanieFunkcii.ZaradVozenDoVlaku(idVozna, idVlaku);
         }
 
         public void VyradVozenZVlaku(int idVozna, int idVlaku)

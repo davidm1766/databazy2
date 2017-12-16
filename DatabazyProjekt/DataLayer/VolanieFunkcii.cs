@@ -13,7 +13,7 @@ namespace DataLayer
     {
         private string _connectionString;
         private OracleConnection _connection;
-
+        private int _varchar2Size = 100;
 
         public VolanieFunkcii(string meno, string heslo) {
             _connectionString = $"Data Source=localhost;User Id={meno};Password={heslo};";
@@ -61,7 +61,7 @@ namespace DataLayer
 
         }
 
-        public void ZaradVOzenDoVlaku(int idVozna, int idVlaku)
+        public void ZaradVozenDoVlaku(int idVozna, int idVlaku)
         {
             var cmd = new OracleCommand
             {
@@ -74,12 +74,17 @@ namespace DataLayer
 
             cmd.Parameters.Add("pa_id_vozna", OracleDbType.Int32, ParameterDirection.Input).Value = idVozna;
             cmd.Parameters.Add("pa_id_vlaku", OracleDbType.Int32, ParameterDirection.Input).Value = idVlaku;
+            cmd.Parameters.Add("pa_error", OracleDbType.Varchar2, ParameterDirection.Output).Size = _varchar2Size;
 
             try
             {
                 _connection.Open();
                 cmd.ExecuteNonQuery();
 
+                var error = cmd.Parameters["pa_error"].Value.ToString();
+                if (!String.IsNullOrWhiteSpace(error)) {
+                    throw new ArgumentException(error);
+                }
             }
             finally
             {
