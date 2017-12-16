@@ -32,15 +32,21 @@
                     </Label>
 
                     <Label Grid.Row="2" Grid.Column="0">
-                        Aktuálna poloha (Lat - Long)
+                        Aktuálna poloha Latitude
                     </Label>
-
+                    <Label Grid.Row="3" Grid.Column="0">
+                        Aktuálna poloha Longitude 
+                    </Label>
+                    
                     <ComboBox Name="CMBVlastnik" ItemsSource="{Binding Vlastnici, Mode=TwoWay}" DisplayMemberPath="NazovVlastnika" SelectedItem="{Binding Vozen.VlastnikVozna}" Margin="5"  Grid.Row="0" Grid.Column="1" />
                     <ComboBox Name="CMBTypVozna" ItemsSource="{Binding TypyVoznov, Mode=TwoWay}" DisplayMemberPath="NazovTypuVozna" SelectedItem="{Binding Vozen.TypVozna}" Margin="5" Grid.Row="1" Grid.Column="1" />
-                    <ComboBox Name="CMBPoloha" ItemsSource="{Binding Polohy, Mode=TwoWay}" DisplayMemberPath="PolohaSpolu" SelectedItem="{Binding Vozen.AktualnaPoloha}" Margin="5" Grid.Row="2" Grid.Column="1"/>
+                    <TextBox Margin="5" Grid.Row="2" Grid.Column="1" Text="{Binding Vozen.AktualnaPoloha.AktualnaPolohaLatitude}"></TextBox>
+                    <TextBox Margin="5" Grid.Row="3" Grid.Column="1" Text="{Binding Vozen.AktualnaPoloha.AktualnaPolohaLongitude}"></TextBox>
 
+                    <Button Margin="5" Grid.Row="4" Grid.Column="1" Click="Button_Click" >Pridaj vozeň</Button>
+                    
+              
 
-                    <Button Margin="5" Grid.Row="5" Grid.Column="1" Click="Button_Click" >Pridaj vozeň</Button>
                 </Grid>
             </TabItem>
             <TabItem Header="Vozen vyradanie/zaradenie">
@@ -54,16 +60,15 @@
                         <RowDefinition Height="1*"/>
                         <RowDefinition Height="1*"/>
                         <RowDefinition Height="1*"/>
-                        <RowDefinition Height="1*"/>
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="0.7*"/>
                         <ColumnDefinition Width="0.7*"/>
-                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="0.5*"/>
                     </Grid.ColumnDefinitions>
                     <Label Grid.Row="0" Grid.Column="0" Content="ID vozňa"/>
                     <TextBox Name="TXTIDVoznaVyradenie" Grid.Row="0" Grid.Column="1" Margin="5"/>
-                    <Button Margin="5" Grid.Row="1" Grid.Column="1" Click="Button_Click_1" Content="Vyraď vozeň"/>
+                    <Button Margin="5" Grid.Row="1" Grid.Column="1" Click="Button_Click_1" Content="Vyraď vozeň z prevádzky"/>
 
                     <Label Grid.Row="2" Grid.Column="0" Content="ID vozňa"/>
                     <TextBox Name="TXTIDVoznaZaradenieDoVlaku" Grid.Row="2" Grid.Column="1" Margin="5"/>
@@ -74,6 +79,8 @@
                     <Label Grid.Row="5" Grid.Column="0" Content="ID vozňa"/>
                     <TextBox Name="TXTIDVoznaVyradenieZVlaku" Grid.Row="5" Grid.Column="1" Margin="5"/>
                     <Button Margin="5" Grid.Row="6" Grid.Column="1" Content="Vyraď vozeň z vlaku" Click="Button_Click_3"/>
+
+                  
                 </Grid>
             </TabItem>
             <TabItem Header="Zmena polohy vozňa">
@@ -109,6 +116,12 @@
 
 
                     <Button Margin="5" Grid.Row="3" Grid.Column="1" Click="Button_Click_4" >Presuň vlak</Button>
+
+                    <Label Grid.Row="4" Grid.Column="0" Content="ID vozňa"/>
+                    <TextBox Name="TXTIDVoznaPriradenieNaKolaj" Grid.Row="4" Grid.Column="1" Margin="5"/>
+                    <Label Grid.Row="5" Grid.Column="0" Content="ID koľaje"/>
+                    <TextBox Name="TXTIDKolaje" Grid.Row="5" Grid.Column="1" Margin="5"/>
+                    <Button Margin="5" Grid.Row="9" Grid.Column="1" Content="Postav vozeň na koľaj" Click="Button_Click_5" />
                 </Grid>
                 
             </TabItem>

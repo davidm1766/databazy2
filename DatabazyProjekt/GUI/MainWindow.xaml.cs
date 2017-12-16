@@ -40,7 +40,7 @@ namespace GUI
             TypyVoznov = VytvorFakeoveTypyVozna();
             Vlastnici = VytvorFakeovychVlastnikov();
             Polohy = VytvorFakeovePolohy();
-            Vozen = new Vozen();
+            Vozen = new Vozen() { AktualnaPoloha=new Poloha()};
             DataContext = this;
         }
 
@@ -145,7 +145,7 @@ namespace GUI
                 var idKolajZ = int.Parse(TXTKolajZPresun.Text);
                 var idKolajNa = int.Parse(TXTKolajNaPresun.Text);
                 CoreApp.Instance.PresunVozen(idVozna,idKolajZ,idKolajNa);
-                MessageBox.Show("Vozeň bol úspešne presunyty.");
+                MessageBox.Show("Vozeň bol úspešne presunuty.");
             }
             catch (Exception ex)
             {
@@ -159,5 +159,21 @@ namespace GUI
 	    {
 		    ReportDataGrid.ItemsSource = CoreApp.Instance.VypisAktualnuPolohuVoznov(null, null).Tables[0].DefaultView;
 	    }
-	}
+
+        private void Button_Click_5(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                var idVozna = int.Parse(TXTIDVoznaPriradenieNaKolaj.Text);
+                var idKolajNa = int.Parse(TXTIDKolaje.Text);
+                CoreApp.Instance.PostavVozenNaKolaj(idVozna, idKolajNa);
+                MessageBox.Show("Vozeň bol úspešne postavený na koľaj.");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            
+        }
+    }
 }

@@ -24,7 +24,36 @@ namespace DataLayer
             _connection.Close();
         }
 
-  
+
+        public int DajIdPolohy(double longitude, double latitude)
+        {
+            var cmd = new OracleCommand
+            {
+                Connection = _connection,
+                CommandText = "gui_daj_id_polohu",
+                CommandType = CommandType.StoredProcedure,
+                BindByName = true
+
+            };
+
+            cmd.Parameters.Add("pa_id_longitude", OracleDbType.Decimal, ParameterDirection.Input).Value = (decimal)longitude;
+            cmd.Parameters.Add("pa_id_latitude", OracleDbType.Decimal, ParameterDirection.Input).Value = (decimal)latitude;
+            cmd.Parameters.Add("pa_id", OracleDbType.Int32, ParameterDirection.Output);
+
+            try
+            {
+                _connection.Open();
+                cmd.ExecuteNonQuery();
+                return (int)(OracleDecimal)cmd.Parameters["pa_id"].Value;
+            }
+            finally
+            {
+                _connection.Close();
+            }
+
+        }
+
+
         /// <summary>
         ///     pridanie vozňa do systému a určenie jeho polohy
         /// </summary>
@@ -110,6 +139,31 @@ namespace DataLayer
             }
         }
 
+        public void PridajVozenNaKolaj(int idVozna, int idKolajNa) {
+            var cmd = new OracleCommand
+            {
+                Connection = _connection,
+                CommandText = "gui_pridat_vozen_na_kolaj",
+                CommandType = CommandType.StoredProcedure,
+                BindByName = true
+
+            };
+
+            cmd.Parameters.Add("pa_id_vozna", OracleDbType.Int32, ParameterDirection.Input).Value = idVozna;
+            cmd.Parameters.Add("pa_id_kolaj_na", OracleDbType.Int32, ParameterDirection.Input).Value = idKolajNa;
+            
+            try
+            {
+                _connection.Open();
+                cmd.ExecuteNonQuery();
+                              
+            }
+            finally
+            {
+                _connection.Close();
+            }
+        }
+
         public void ZaradVozenDoVlaku(int idVozna, int idVlaku)
         {
             var cmd = new OracleCommand
@@ -151,7 +205,7 @@ namespace DataLayer
             var cmd = new OracleCommand
             {
                 Connection = _connection,
-                CommandText = "gui_insert_vozen",
+                CommandText = "gui_vyrad_vozen_z_prevadzky",
                 CommandType = CommandType.StoredProcedure,
                 BindByName = true
 

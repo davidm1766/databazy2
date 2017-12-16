@@ -31,9 +31,10 @@ namespace Core
 
 
         public void PridajNovyVozen(Vozen novyVozen) {
+            int poloha =_volanieFunkcii.DajIdPolohy(novyVozen.AktualnaPoloha.AktualnaPolohaLongitude,novyVozen.AktualnaPoloha.AktualnaPolohaLatitude);
             _volanieFunkcii.VlozNovyVozen(novyVozen.VlastnikVozna.IdVlastnika,
                                           novyVozen.TypVozna.IdTypuVozna,
-                                          novyVozen.AktualnaPoloha.IdPoloha
+                                          poloha
                                           );
         }
 
@@ -66,6 +67,11 @@ namespace Core
         public void PresunVozen(int idVozna, int idKolajZ, int idKolajNa)
         {
             _volanieFunkcii.PresunVozen(idVozna, idKolajZ, idKolajNa);
+        }
+
+        public void PostavVozenNaKolaj(int idVozna, int idKolajNa)
+        {
+            _volanieFunkcii.PridajVozenNaKolaj(idVozna, idKolajNa);
         }
     }
 }
