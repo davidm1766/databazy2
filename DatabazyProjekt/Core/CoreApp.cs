@@ -73,5 +73,11 @@ namespace Core
         {
             _volanieFunkcii.PridajVozenNaKolaj(idVozna, idKolajNa);
         }
+
+        public Zamestnanec NajdiZamestnanca(int idZamestnanca)
+        {
+            _volanieFunkcii.NajdiZamestnanca(idZamestnanca);
+            throw new Exception("neimplementovane");
+        }
     }
 }

@@ -60,10 +60,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CoreApp.cs" />
+    <Compile Include="Models\BitmapImage.cs" />
     <Compile Include="Models\Poloha.cs" />
     <Compile Include="Models\TypVozna.cs" />
     <Compile Include="Models\Vlastnik.cs" />
     <Compile Include="Models\Vozen.cs" />
+    <Compile Include="Models\Zamestnanec.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

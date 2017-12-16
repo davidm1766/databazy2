@@ -89,6 +89,38 @@ namespace DataLayer
 
 
         }
+        public void VlozZamestnanca(string meno,
+                                    string priezvisko,
+                                    string cestaKuFotke)
+        {
+            var cmd = new OracleCommand
+            {
+                Connection = _connection,
+                CommandText = "gui_uloz_pracovnika",
+                CommandType = CommandType.StoredProcedure,
+                BindByName = true
+            };
+
+            cmd.Parameters.Add("pa_meno", OracleDbType.Varchar2, ParameterDirection.Input).Value = meno;
+            cmd.Parameters.Add("pa_priezvisko", OracleDbType.Varchar2, ParameterDirection.Input).Value = priezvisko;
+            cmd.Parameters.Add("pa_src_file_path", OracleDbType.Varchar2, ParameterDirection.Input).Value = cestaKuFotke;
+
+            try
+            {
+                _connection.Open();
+                cmd.ExecuteNonQuery();
+            }
+            finally
+            {
+                _connection.Close();
+            }
+
+        }
+
+        public void NajdiZamestnanca(int idZamestnanca)
+        {
+            throw new NotImplementedException();
+        }
 
         public void PresunVozen(int idVozna, int idKolajZ, int idKolajNa)
         {

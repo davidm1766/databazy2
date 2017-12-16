@@ -19,6 +19,10 @@ namespace GUI
         public Vozen Vozen { get; set; }
 
         /// <summary>
+        ///     Aktualne zobrazeny zamestnanec
+        /// </summary>
+        public Zamestnanec Zamestnanec { get; set; }
+        /// <summary>
         ///     Vsetci vlastnici z tabulky vlastnik
         /// </summary>
         public ObservableCollection<Vlastnik> Vlastnici { get; set; }
@@ -32,6 +36,8 @@ namespace GUI
         ///     Všetky mozne polohy
         /// </summary>
         public ObservableCollection<Poloha> Polohy { get; set; }
+
+
 
         public MainWindow(string meno, string heslo)
         {
@@ -162,6 +168,7 @@ namespace GUI
 
         private void Button_Click_5(object sender, RoutedEventArgs e)
         {
+            //vlozenie vozna na kolaj
             try
             {
                 var idVozna = int.Parse(TXTIDVoznaPriradenieNaKolaj.Text);
@@ -174,6 +181,21 @@ namespace GUI
                 MessageBox.Show(ex.Message);
             }
             
+        }
+
+        private void Button_Click_6(object sender, RoutedEventArgs e)
+        {
+            //najdi zamestnanca
+            try
+            {
+                var idZamestnanca = int.Parse(TXTIDZamestnanca.Text);
+                this.Zamestnanec = CoreApp.Instance.NajdiZamestnanca(idZamestnanca);
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
     }
 }

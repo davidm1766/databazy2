@@ -138,6 +138,35 @@
                     <Button Grid.Row="1" Click="PrintButton_OnClick">Vypis</Button>
                 </Grid>
             </TabItem>
+            <TabItem Header="Zamestnanec">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="3*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+                    <Label Grid.Row="0" Grid.Column="0">Id zamestnanca</Label>
+                    <TextBox Name="TXTIDZamestnanca" Margin="5" Grid.Row="0" Grid.Column="1"/>
+                    <Button Margin="5" Grid.Row="1" Grid.Column="1" Click="Button_Click_6">Nájdi zamestnanca</Button>
+
+                    <Label Grid.Row="2" Grid.Column="0">Meno</Label>
+                    <Label Grid.Row="3" Grid.Column="0">Priezvisko</Label>
+                    <Label Grid.Row="4" Grid.Column="0">Fotka</Label>
+
+                    <TextBlock Text="{Binding Zamestnanec.Meno}" Margin="5" Grid.Row="2" Grid.Column="1"/>
+                    <TextBlock Text="{Binding Zamestnanec.Priezvisko}" Margin="5" Grid.Row="3" Grid.Column="1"/>
+                    <Image  Source="{Binding Zamestnanec.Fotka}" Grid.Row="4" Grid.RowSpan="2" Grid.Column="1"  MaxWidth="200" MaxHeight="200"/>
+
+                </Grid>
+                
+            </TabItem>
         </TabControl>
 
 
