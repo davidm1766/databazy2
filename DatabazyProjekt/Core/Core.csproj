@@ -59,8 +59,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
+    <Compile Include="CoreApp.cs" />
+    <Compile Include="Models\Poloha.cs" />
+    <Compile Include="Models\TypVozna.cs" />
+    <Compile Include="Models\Vlastnik.cs" />
+    <Compile Include="Models\Vozen.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DataLayer\DataLayer.csproj">
+      <Project>{7807B7DC-3C43-499A-8A2B-3C73532DD4C4}</Project>
+      <Name>DataLayer</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

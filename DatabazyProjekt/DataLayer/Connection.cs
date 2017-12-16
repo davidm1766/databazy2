@@ -5,14 +5,26 @@ using System.Data;
 
 namespace DataLayer
 {
-    public class Class1
+    public class Connection
     {
-        private string _connectionString = "Data Source=localhost;User Id=david;Password=Mimada176;";
+        private string _connectionString;
         private OracleConnection conn;
 
 
-        public Class1() {
+        public Connection(string connectionString ) {
+            _connectionString = connectionString;
             conn = new OracleConnection(_connectionString);
+        }
+
+
+        public void Open()
+        {
+            conn.Open();
+        }
+
+        public void Close()
+        {
+            conn.Close();
         }
 
         public void TestFunction()
@@ -54,9 +66,11 @@ namespace DataLayer
             Console.WriteLine(s);
         }
 
-        
-        
-        
+        internal OracleConnection GetConn()
+        {
+            throw new NotImplementedException();
+        }
+
         public void TryConnect()
         {
             

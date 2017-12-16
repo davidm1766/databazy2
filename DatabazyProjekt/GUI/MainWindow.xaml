@@ -1,0 +1,53 @@
+﻿<Window x:Class="GUI.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:GUI"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="354.06" Width="533.933">
+    <Grid>
+        <TabControl Grid.Column="0" Grid.Row="0">
+            <TabItem Header="Pridanie vozňa">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="153*"/>
+                        <ColumnDefinition Width="229*"/>
+                    </Grid.ColumnDefinitions>
+                    <Label Grid.Row="0" Grid.Column="0">
+                        Vlastnik
+                    </Label>
+
+                    <Label Grid.Row="1" Grid.Column="0">
+                        Typ vozňa
+                    </Label>
+
+                    <Label Grid.Row="2" Grid.Column="0">
+                        Aktuálna poloha (Lat - Long)
+                    </Label>
+
+                    <ComboBox Name="CMBVlastnik" ItemsSource="{Binding Vlastnici, Mode=TwoWay}" DisplayMemberPath="NazovVlastnika" SelectedItem="{Binding Vozen.VlastnikVozna}" Margin="5"  Grid.Row="0" Grid.Column="1" />
+                    <ComboBox Name="CMBTypVozna" ItemsSource="{Binding TypyVoznov, Mode=TwoWay}" DisplayMemberPath="NazovTypuVozna" SelectedItem="{Binding Vozen.TypVozna}" Margin="5" Grid.Row="1" Grid.Column="1" />
+                    <ComboBox Name="CMBPoloha" ItemsSource="{Binding Polohy, Mode=TwoWay}" DisplayMemberPath="PolohaSpolu" SelectedItem="{Binding Vozen.AktualnaPoloha}" Margin="5" Grid.Row="2" Grid.Column="1"/>
+                    
+                    
+                    <Button Margin="5" Grid.Row="5" Grid.Column="1" Click="Button_Click" >Pridaj vozeň</Button>
+                </Grid>
+            </TabItem>
+            <TabItem Header="TabItem">
+                <Grid Background="#FFE5E5E5"/>
+            </TabItem>
+        </TabControl>
+        
+
+    </Grid>
+</Window>
