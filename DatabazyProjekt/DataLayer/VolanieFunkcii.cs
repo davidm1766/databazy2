@@ -195,7 +195,36 @@ namespace DataLayer
 		    {
 			    _connection.Close();
 		    }
-		}		    
-        
-    }
+		}
+
+	    public DataSet DajPolohuVoznov(string nazovVlastnika, string nazovTypu)
+	    {
+		    var cmd = new OracleCommand()
+		    {
+			    Connection = _connection,
+			    CommandText = "vypis_aktualnu_polohu_voznov",
+			    CommandType = CommandType.StoredProcedure,
+			    BindByName = true
+
+		    };
+
+		    cmd.Parameters.Add("pa_nazov_typu_vozna", OracleDbType.Varchar2, ParameterDirection.Input).Value = nazovTypu;
+		    cmd.Parameters.Add("pa_nazov_vlastnika", OracleDbType.Varchar2, ParameterDirection.Input).Value = nazovVlastnika;
+			cmd.Parameters.Add("result", OracleDbType.RefCursor).Direction = ParameterDirection.ReturnValue;
+
+		    try
+		    {
+			    _connection.Open();
+				var dataSet = new DataSet();
+				var oracleDataAdapter = new OracleDataAdapter(cmd);
+			    oracleDataAdapter.Fill(dataSet);
+			    return dataSet;
+		    }
+		    finally
+		    {
+			    _connection.Close();
+		    }
+	    }
+
+	}
 }

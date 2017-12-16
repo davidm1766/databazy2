@@ -112,6 +112,19 @@
                 </Grid>
                 
             </TabItem>
+            <TabItem Header="Report">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="10*"/>
+                        <RowDefinition Height="1*"/>
+                    </Grid.RowDefinitions>
+
+                    <DataGrid Grid.Row="0" Name="ReportDataGrid">
+                    </DataGrid>
+
+                    <Button Grid.Row="1" Click="PrintButton_OnClick">Vypis</Button>
+                </Grid>
+            </TabItem>
         </TabControl>
 
 
