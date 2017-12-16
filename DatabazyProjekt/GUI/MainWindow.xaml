@@ -108,7 +108,7 @@
                     <TextBox Name="TXTKolajNaPresun" Margin="5" Grid.Row="2" Grid.Column="1" />
 
 
-                    <Button Margin="5" Grid.Row="3" Grid.Column="1" Click="Button_Click" >Presuň vlak</Button>
+                    <Button Margin="5" Grid.Row="3" Grid.Column="1" Click="Button_Click_4" >Presuň vlak</Button>
                 </Grid>
                 
             </TabItem>

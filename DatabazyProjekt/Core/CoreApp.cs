@@ -55,5 +55,10 @@ namespace Core
         {
             _volanieFunkcii.VyradVozenZVlaku(idVozna);
         }
+
+        public void PresunVozen(int idVozna, int idKolajZ, int idKolajNa)
+        {
+            _volanieFunkcii.PresunVozen(idVozna, idKolajZ, idKolajNa);
+        }
     }
 }

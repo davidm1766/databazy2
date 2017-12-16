@@ -130,5 +130,22 @@ namespace GUI
                 MessageBox.Show(ex.Message);
             }
         }
+
+        private void Button_Click_4(object sender, RoutedEventArgs e)
+        {
+            //presun z kolaje na kolaj
+            try
+            {
+                var idVozna = int.Parse(TXTVozenIdPresun.Text);
+                var idKolajZ = int.Parse(TXTKolajZPresun.Text);
+                var idKolajNa = int.Parse(TXTKolajNaPresun.Text);
+                CoreApp.Instance.PresunVozen(idVozna,idKolajZ,idKolajNa);
+                MessageBox.Show("Vozeň bol úspešne presunyty.");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
     }
 }

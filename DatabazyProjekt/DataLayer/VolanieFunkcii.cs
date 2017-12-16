@@ -61,6 +61,31 @@ namespace DataLayer
 
         }
 
+        public void PresunVozen(int idVozna, int idKolajZ, int idKolajNa)
+        {
+            var cmd = new OracleCommand
+            {
+                Connection = _connection,
+                CommandText = "gui_presun_vozen_z_kolaje",
+                CommandType = CommandType.StoredProcedure,
+                BindByName = true
+
+            };
+
+            cmd.Parameters.Add("pa_id_vozna", OracleDbType.Int32, ParameterDirection.Input).Value = idVozna;
+            cmd.Parameters.Add("pa_id_kolaj_z", OracleDbType.Int32, ParameterDirection.Input).Value = idKolajZ;
+            cmd.Parameters.Add("pa_id_kolaj_na", OracleDbType.Int32, ParameterDirection.Input).Value = idKolajNa;
+            try
+            {
+                _connection.Open();
+                cmd.ExecuteNonQuery();
+            }
+            finally
+            {
+                _connection.Close();
+            }
+        }
+
         public void VyradVozenZVlaku(int idVozna)
         {
             var cmd = new OracleCommand
