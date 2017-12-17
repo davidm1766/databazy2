@@ -37,20 +37,13 @@ namespace GUI
         /// </summary>
         public ObservableCollection<TypVozna> TypyVoznov { get; set; }
 
-        /// <summary>
-        ///     Všetky mozne polohy
-        /// </summary>
-        public ObservableCollection<Poloha> Polohy { get; set; }
-
-
-
+        
         public MainWindow(string meno, string heslo)
         {
             InitializeComponent();
             CoreApp.Register(meno,heslo);
-            TypyVoznov = VytvorFakeoveTypyVozna();
-            Vlastnici = VytvorFakeovychVlastnikov();
-            Polohy = VytvorFakeovePolohy();
+            TypyVoznov = NacitajTypyVoznovZDB();
+            Vlastnici = NacitajVlastnikovZDB();
             Vozen = new Vozen() { AktualnaPoloha=new Poloha()};
             ZamestnanecNovy = new Zamestnanec();
             DataContext = this;
@@ -64,47 +57,31 @@ namespace GUI
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             //pridanie noveho vozna
-            CoreApp.Instance.PridajNovyVozen(Vozen);
+            try
+            {
+                CoreApp.Instance.PridajNovyVozen(Vozen);
+                MessageBox.Show("Vozeň bol úspešne pridaný");
+            }
+            catch (Exception ex) {
+                MessageBox.Show(ex.Message);
+            }
+            
 
         }
+        
 
-
-
-
-
-
-        public ObservableCollection<TypVozna> VytvorFakeoveTypyVozna()
+        public ObservableCollection<TypVozna> NacitajTypyVoznovZDB()
         {
-            ObservableCollection<TypVozna> ret = new ObservableCollection<TypVozna>();
-            ret.Add(new TypVozna() { IdTypuVozna= 1, NazovTypuVozna = "Starý vozeň"});
-            ret.Add(new TypVozna() { IdTypuVozna = 2, NazovTypuVozna = "Prepravný" });
-            ret.Add(new TypVozna() { IdTypuVozna = 3, NazovTypuVozna = "Na uhlie" });
-            ret.Add(new TypVozna() { IdTypuVozna = 4, NazovTypuVozna = "Na mlieko" });
-            return ret;
+            return CoreApp.Instance.DajVsetkyTypyVoznov();
         }
 
 
-        public ObservableCollection<Vlastnik> VytvorFakeovychVlastnikov()
+        public ObservableCollection<Vlastnik> NacitajVlastnikovZDB()
         {
-            ObservableCollection<Vlastnik> ret = new ObservableCollection<Vlastnik>();
-            ret.Add(new Vlastnik() { IdVlastnika = 1, NazovVlastnika = "ZSSK" });
-            ret.Add(new Vlastnik() { IdVlastnika = 2, NazovVlastnika = "Regio Jet" });
-            ret.Add(new Vlastnik() { IdVlastnika = 3, NazovVlastnika = "LEO Express" });
-            ret.Add(new Vlastnik() { IdVlastnika = 4, NazovVlastnika = "České drahy" });
-            return ret;
+            return CoreApp.Instance.DajVsetkychVlastnikov();
         }
-
-
-        public ObservableCollection<Poloha> VytvorFakeovePolohy()
-        {
-            ObservableCollection<Poloha> ret = new ObservableCollection<Poloha>();
-            ret.Add(new Poloha() { IdPoloha = 1, AktualnaPolohaLatitude = 20.1, AktualnaPolohaLongitude = 20.2 });
-            ret.Add(new Poloha() { IdPoloha = 2, AktualnaPolohaLatitude = 12.1, AktualnaPolohaLongitude = 12.2 });
-            ret.Add(new Poloha() { IdPoloha = 3, AktualnaPolohaLatitude = 10.1, AktualnaPolohaLongitude = 10.2 });
-            ret.Add(new Poloha() { IdPoloha = 4, AktualnaPolohaLatitude = 5.1, AktualnaPolohaLongitude = 5.2 });
-            return ret;
-        }
-
+        
+        
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
             //vyradenie vozna z prevadzky
@@ -227,7 +204,7 @@ namespace GUI
                     image.EndInit();
                     ZamestnanecNovy.Fotka = image;
                     ZamestnanecNovy.CestaKuFotke = openFileDialog.FileName;
-
+                    IMGNovyZamestnanec.Source = image;
                 }
             }
             catch (Exception ex)

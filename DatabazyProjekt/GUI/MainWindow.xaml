@@ -173,8 +173,8 @@
                         <RowDefinition Height="1*"/>
                         <RowDefinition Height="1*"/>
                         <RowDefinition Height="1*"/>
-                        <RowDefinition Height="1*"/>
                         <RowDefinition Height="3*"/>
+                        <RowDefinition Height="1*"/>
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="1*"/>
@@ -189,9 +189,9 @@
                     <TextBox Name="TXTPriezviskoZamestnancaNew" Text="{Binding ZamestnanecNovy.Priezvisko}" Margin="5" Grid.Row="1" Grid.Column="1"/>
                     <Button Margin="5" Grid.Row="2" Grid.Column="1" Click="Button_Click_7">Vybrať fotku</Button>
 
-                    <Button Margin="5" Grid.Row="3" Grid.Column="1" Click="Button_Click_8">Pridaj nového zamestnanca</Button>
-                    <Image  Source="{Binding ZamestnanecNovy.Fotka}" Grid.Row="4" Grid.RowSpan="2" Grid.Column="1"  MaxWidth="200" MaxHeight="200"/>
-
+                    
+                    <Image Name="IMGNovyZamestnanec" Grid.Row="3" Grid.RowSpan="2" Grid.Column="0" Grid.ColumnSpan="2" />
+                    <Button Margin="5" Grid.Row="5" Grid.Column="1" Click="Button_Click_8">Pridaj nového zamestnanca</Button>
                 </Grid>
 
             </TabItem>

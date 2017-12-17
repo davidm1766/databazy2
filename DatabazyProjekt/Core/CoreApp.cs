@@ -5,6 +5,7 @@ using Core.Models;
 using DataLayer;
 using System.Windows.Media.Imaging;
 using System.IO;
+using System.Collections.ObjectModel;
 
 namespace Core
 {
@@ -72,6 +73,26 @@ namespace Core
             _volanieFunkcii.PresunVozen(idVozna, idKolajZ, idKolajNa);
         }
 
+        public ObservableCollection<Vlastnik> DajVsetkychVlastnikov()
+        {
+            ObservableCollection<Vlastnik> ret = new ObservableCollection<Vlastnik>();
+            foreach (var vlastnik in _volanieFunkcii.DajVsetkychVlastnikov()) {
+                ret.Add(new Vlastnik() { IdVlastnika = vlastnik.Item1, NazovVlastnika = vlastnik.Item2 });
+            }
+            return ret;
+        }
+
+        public ObservableCollection<TypVozna> DajVsetkyTypyVoznov()
+        {
+
+            ObservableCollection<TypVozna> ret = new ObservableCollection<TypVozna>();
+            foreach (var typVozna in _volanieFunkcii.DajVsetkyTypyVoznov())
+            {
+                ret.Add(new TypVozna() { IdTypuVozna = typVozna.Item1, NazovTypuVozna = typVozna.Item2 });
+            }
+            return ret;
+        }
+
         public void PostavVozenNaKolaj(int idVozna, int idKolajNa)
         {
             _volanieFunkcii.PridajVozenNaKolaj(idVozna, idKolajNa);
@@ -90,6 +111,8 @@ namespace Core
             zam.Fotka = ConvertBytesToImage(tupl.Item3);
             return zam;
         }
+
+       
 
         private BitmapImage ConvertBytesToImage(byte[] bytes) {
             MemoryStream stream = new MemoryStream(bytes);

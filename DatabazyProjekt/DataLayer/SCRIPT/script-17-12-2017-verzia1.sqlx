@@ -1,0 +1,729 @@
+drop type t_pracovnik force
+/
+drop type t_stanica force
+/
+drop type t_kolaj force
+/
+drop type t_vozen_kolaj force
+/
+drop type t_typ_vozna force
+/
+drop type t_vlastnik force
+/
+drop type t_vozen force
+/
+drop type t_vozen_vlak force
+/
+drop type t_vlak force
+/
+drop type t_poloha_vozna force
+/
+drop type t_druh_vlaku force
+/
+drop type t_vlak_poloha force
+/
+drop type t_poloha force
+/
+drop type t_snimac force
+/
+drop table PRACOVNIK cascade constraint
+/
+drop table STANICA cascade constraint
+/
+drop table KOLAJ cascade constraint
+/
+drop table VOZEN_KOLAJ cascade constraint
+/
+drop table TYP_VOZNA cascade constraint
+/
+drop table VLASTNIK cascade constraint
+/
+drop table VOZEN cascade constraint
+/
+drop table VOZEN_VLAK cascade constraint
+/
+drop table VLAK cascade constraint
+/
+drop table POLOHA_VOZNA cascade constraint
+/
+drop table DRUH_VLAKU cascade constraint
+/
+drop table VLAK_POLOHA cascade constraint
+/
+drop table POLOHA cascade constraint
+/
+drop table SNIMAC cascade constraint
+/
+drop sequence id_pracovnik_seq
+/
+drop sequence id_typu_seq
+/
+drop sequence id_vlastnik_seq
+/
+drop sequence id_poloha_seq
+/
+drop sequence id_snimac_seq
+/
+drop sequence id_stanica_seq
+/
+drop sequence id_kolaj_seq
+/
+drop sequence id_vozen_kolaj_seq
+/
+drop sequence id_vozen_vlak_seq
+/
+drop sequence id_vlak_poloha_seq
+/
+drop sequence id_poloha_vozna_seq
+/
+drop sequence id_vlak_seq
+/
+drop sequence id_vozna_seq
+/
+drop sequence id_druhu_seq
+/
+create or replace type t_pracovnik as object
+(
+  id_pracovnika integer,
+  meno varchar(30),
+  priezvisko varchar(30),
+  fotka BLOB 
+)
+/
+create or replace type t_typ_vozna as object
+(
+  id_typu integer,
+  typ_nazov VARCHAR2(30)  
+)
+/
+create or replace type t_vlastnik as object
+(
+  id_vlastnik integer,
+  nazov VARCHAR2(30)  
+)
+/
+create or replace type t_poloha as object
+(
+  id_poloha integer,
+  gps_latitude decimal(18,12),
+  gps_longitude decimal(18,12)
+)
+/
+create or replace type t_snimac as object
+(
+  id_snimac integer,
+  poloha ref t_poloha
+  --constraint foreign key(poloha) references poloha t (value(t))
+)
+/
+create or replace type t_stanica as object
+(
+  id_stanica integer,
+  poloha ref t_poloha,
+  nazov varchar(30)
+)
+/
+create or replace type t_kolaj as object
+(
+  id_kolaj integer,
+  stanica ref t_stanica,
+  dlzka float
+)
+/
+create or replace type t_druh_vlaku as object
+(
+  id_druhu integer,
+  nazov_druhu varchar2(30)
+)
+/
+create or replace type t_vlak as object
+(
+  id_vlak integer,
+  druh ref t_druh_vlaku
+)
+/
+create or replace type t_vozen as object
+(
+  id_vozna integer,
+  vlastnik ref t_vlastnik,
+  typ_vozna ref t_typ_vozna,
+  aktual_vlak ref t_vlak,
+  aktual_poloha ref t_poloha,
+  aktual_kolaj ref t_kolaj,
+  aktual_vlak_od date,
+  aktual_poloha_od date,
+  aktual_kolaj_od date,
+  odstaveny char(1)
+)
+/
+create or replace type t_vozen_kolaj as object
+(
+  id_vozen_kolaj integer,
+  vozen ref t_vozen,
+  kolaj ref t_kolaj,
+  cas_od date,
+  cas_do date
+)
+/
+create or replace type t_vozen_vlak as object
+(
+  id_vozen_vlak integer,
+  --druh ref t_druh_vlaku,
+  vozen ref t_vozen,
+  vlak ref t_vlak,
+  cas_od date,
+  cas_do date
+)
+/
+create or replace type t_vlak_poloha as object
+(
+  id_vlak_poloha integer,
+  poloha ref t_poloha,
+  vlak ref t_vlak,
+  cas_od date,
+  cas_do date
+)
+/
+create or replace type t_poloha_vozna as object
+(
+  id_poloha_vozna integer,
+  poloha ref t_poloha,
+  vozen ref t_vozen,
+  cas_od date,
+  cas_do date
+)
+/
+
+-- tables
+create table PRACOVNIK of t_pracovnik
+(
+  id_pracovnika primary key,
+  meno not null,
+  priezvisko not null,
+  fotka default EMPTY_BLOB() not null
+
+)
+/
+create table STANICA of t_stanica
+(
+  id_stanica primary key,
+  poloha not null,
+  nazov not null
+)
+/
+create table KOLAJ of t_kolaj
+(
+  id_kolaj primary key,
+  stanica not null,
+  dlzka not null
+)
+/
+create table VOZEN_KOLAJ of t_vozen_kolaj(
+  id_vozen_kolaj primary key,
+  vozen not null,
+  kolaj not null,
+  cas_od not null
+)
+/
+create table TYP_VOZNA of t_typ_vozna
+(
+  id_typu primary key,
+  typ_nazov not null
+)
+/
+create table VLASTNIK of t_vlastnik
+(
+  id_vlastnik primary key,
+  nazov not null
+)
+/
+create table VOZEN of t_vozen
+(
+  id_vozna primary key,
+  vlastnik not null,
+  typ_vozna not null,
+  aktual_vlak null,
+  aktual_poloha null,
+  aktual_kolaj null,
+  aktual_vlak_od not null,
+  aktual_poloha_od not null,
+  aktual_kolaj_od not null
+)
+/
+create table VOZEN_VLAK of t_vozen_vlak
+(
+  id_vozen_vlak primary key,
+  --druh not null,
+  vozen not null,
+  vlak not null,
+  cas_od not null
+)
+/
+create table VLAK of t_vlak
+(
+  id_vlak primary key,
+  druh not null
+)
+/
+create table POLOHA_VOZNA of t_poloha_vozna
+(
+  id_poloha_vozna primary key,
+  poloha not null,
+  vozen not null,
+  cas_od not null
+)
+/
+create table DRUH_VLAKU of t_druh_vlaku
+(
+  id_druhu primary key,
+  nazov_druhu not null
+)
+/
+create table VLAK_POLOHA of t_vlak_poloha
+(
+  id_vlak_poloha primary key,
+  poloha not null,
+  vlak not null,
+  cas_od not null
+)
+/
+create table POLOHA of t_poloha
+(
+  id_poloha primary key,
+  gps_latitude not null,
+  gps_longitude not null
+)
+/
+create table SNIMAC of t_snimac
+(
+  id_snimac primary key,
+  poloha not null
+)
+/
+
+-- sequences
+create sequence id_pracovnik_seq start with 1
+  increment by 1
+  minvalue 1
+  maxvalue 10000000
+/
+create sequence id_typu_seq start with 1
+  increment by 1
+  minvalue 1
+  maxvalue 10000000
+/
+create sequence id_vlastnik_seq start with 1
+  increment by 1
+  minvalue 1
+  maxvalue 10000000
+/
+create sequence id_poloha_seq start with 1
+  increment by 1
+  minvalue 1
+  maxvalue 10000000
+/
+create sequence id_snimac_seq start with 1
+  increment by 1
+  minvalue 1
+  maxvalue 10000000
+/
+create sequence id_stanica_seq start with 1
+  increment by 1
+  minvalue 1
+  maxvalue 10000000
+/
+create sequence id_kolaj_seq start with 1
+  increment by 1
+  minvalue 1
+  maxvalue 10000000
+/
+create sequence id_vozen_kolaj_seq start with 1
+  increment by 1
+  minvalue 1
+  maxvalue 10000000
+/
+create sequence id_vozen_vlak_seq start with 1
+  increment by 1
+  minvalue 1
+  maxvalue 10000000
+/
+create sequence id_vlak_poloha_seq start with 1
+  increment by 1
+  minvalue 1
+  maxvalue 10000000
+/
+create sequence id_poloha_vozna_seq start with 1
+  increment by 1
+  minvalue 1
+  maxvalue 10000000
+/
+create sequence id_vlak_seq start with 1
+  increment by 1
+  minvalue 1
+  maxvalue 10000000
+/
+create sequence id_vozna_seq start with 1
+  increment by 1
+  minvalue 1
+  maxvalue 10000000
+/
+create sequence id_druhu_seq start with 1
+  increment by 1
+  minvalue 1
+  maxvalue 10000000
+/
+create or replace procedure insert_typ_vozna(pa_typ_nazov typ_vozna.typ_nazov%type)
+as
+begin
+  insert into typ_vozna values(id_typu_seq.nextval, pa_typ_nazov);
+end;
+/
+create or replace procedure insert_vlastnik(pa_nazov vlastnik.nazov%type)
+as
+begin
+  insert into vlastnik values(id_vlastnik_seq.nextval, pa_nazov);
+end;
+/
+create or replace procedure insert_druh_vlaku(pa_nazov_druhu druh_vlaku.nazov_druhu%type)
+as
+begin
+  insert into druh_vlaku values(id_druhu_seq.nextval, pa_nazov_druhu);
+end;
+/
+create or replace procedure insert_vlak(pa_id_druhu druh_vlaku.id_druhu%type)
+as
+  d_vlaku ref t_druh_vlaku;
+begin
+  select ref(p) into d_vlaku from druh_vlaku p where id_druhu = pa_id_druhu;
+  insert into vlak values(id_vlak_seq.nextval, d_vlaku);
+end;
+/
+-- select p.druh.nazov_druhu from vlak p;
+create or replace procedure insert_poloha(pa_gps_latitude poloha.gps_latitude%type, pa_gps_longitude poloha.gps_longitude%type)
+as
+begin
+  insert into poloha values(id_poloha_seq.nextval, pa_gps_latitude, pa_gps_longitude);
+end;
+/
+create or replace procedure insert_snimac(pa_id_poloha poloha.id_poloha%type)
+as
+  v_poloha ref t_poloha;
+begin
+  select ref(p) into v_poloha from poloha p where id_poloha = pa_id_poloha;
+  insert into snimac values(id_snimac_seq.nextval, v_poloha);
+end;
+/
+create or replace procedure insert_stanica(pa_id_poloha poloha.id_poloha%type, pa_nazov stanica.nazov%type)
+as
+  v_poloha ref t_poloha;
+begin
+  select ref(p) into v_poloha from poloha p where id_poloha = pa_id_poloha;
+  insert into stanica values (id_stanica_seq.nextval, v_poloha, pa_nazov);
+end;
+/
+create or replace procedure insert_kolaj(pa_id_stanica stanica.id_stanica%type, pa_dlzka kolaj.dlzka%type)
+as
+  v_stanica ref t_stanica;
+begin
+  select ref(p) into v_stanica from stanica p where id_stanica = pa_id_stanica;
+  insert into kolaj values (id_kolaj_seq.nextval, v_stanica, pa_dlzka);
+end;
+/
+create or replace procedure insert_vlak_poloha(pa_id_poloha poloha.id_poloha%type, pa_id_vlak vlak.id_vlak%type, pa_cas_od vlak_poloha.cas_od%type, pa_cas_do vlak_poloha.cas_do%type)
+as
+  v_poloha ref t_poloha;
+  v_vlak ref t_vlak;
+begin
+  select ref(p) into v_poloha from poloha p where id_poloha = pa_id_poloha;
+  select ref(p) into v_vlak from vlak p where id_vlak = pa_id_vlak;
+  insert into vlak_poloha values(id_vlak_poloha_seq.nextval, v_poloha, v_vlak, pa_cas_od, pa_cas_do);
+end;
+/
+create or replace procedure insert_vozen
+(
+  pa_id_vlastnik vlastnik.id_vlastnik%type,
+  pa_id_typ_vozna typ_vozna.id_typu%type,
+  pa_id_aktual_vlak vlak.id_vlak%type,
+  pa_id_aktual_poloha poloha.id_poloha%type,
+  pa_id_aktual_kolaj kolaj.id_kolaj%type,
+  pa_aktual_vlak_od vozen.aktual_vlak_od%type,
+  pa_aktual_poloha_od vozen.aktual_poloha_od%type,
+  pa_aktual_kolaj_od vozen.aktual_kolaj_od%type
+)
+as
+  v_vlastnik ref t_vlastnik;
+  v_typ_vozna ref t_typ_vozna;
+  v_aktual_vlak ref t_vlak;
+  v_aktual_poloha ref t_poloha;
+  v_aktual_kolaj ref t_kolaj;
+begin
+  select ref(p) into v_vlastnik from vlastnik p where id_vlastnik = pa_id_vlastnik;
+  select ref(p) into v_typ_vozna from typ_vozna p where id_typu = pa_id_typ_vozna;
+  select ref(p) into v_aktual_vlak from vlak p where id_vlak = pa_id_aktual_vlak;
+  select ref(p) into v_aktual_poloha from poloha p where id_poloha = pa_id_aktual_poloha;
+  select ref(p) into v_aktual_kolaj from kolaj p where id_kolaj = pa_id_aktual_kolaj;
+  insert into vozen values(id_vozna_seq.nextval, v_vlastnik, v_typ_vozna, v_aktual_vlak, v_aktual_poloha, v_aktual_kolaj, pa_aktual_vlak_od, pa_aktual_poloha_od, pa_aktual_kolaj_od,null);
+end;
+/
+create or replace procedure insert_poloha_vozna(pa_id_poloha poloha.id_poloha%type, pa_id_vozna vozen.id_vozna%type, pa_cas_od poloha_vozna.cas_od%type, pa_cas_do poloha_vozna.cas_do%type)
+as
+  v_poloha ref t_poloha;
+  v_vozen ref t_vozen;
+begin
+  select ref(p) into v_poloha from poloha p where id_poloha = pa_id_poloha;
+  select ref(p) into v_vozen from vozen p where id_vozna = pa_id_vozna;
+  insert into poloha_vozna values(id_poloha_vozna_seq.nextval, v_poloha, v_vozen, pa_cas_od, pa_cas_do);
+end;
+/
+create or replace procedure insert_vozen_kolaj(pa_id_vozna vozen.id_vozna%type, pa_id_kolaj kolaj.id_kolaj%type, pa_cas_od vozen_kolaj.cas_od%type, pa_cas_do vozen_kolaj.cas_do%type)
+as
+  v_vozen ref t_vozen;
+  v_kolaj ref t_kolaj;
+begin
+  select ref(p) into v_vozen from vozen p where id_vozna = pa_id_vozna;
+  select ref(p) into v_kolaj from kolaj p where id_kolaj = pa_id_kolaj;
+  insert into vozen_kolaj values(id_vozen_kolaj_seq.nextval, v_vozen, v_kolaj, pa_cas_od, pa_cas_do);
+end;
+/
+create or replace procedure insert_vozen_vlak(pa_id_vozna vozen.id_vozna%type, pa_id_vlak vlak.id_vlak%type, pa_cas_od vozen_vlak.cas_od%type, pa_cas_do vozen_vlak.cas_do%type)
+as
+  v_vozen ref t_vozen;
+  v_vlak ref t_vlak;
+begin
+  select ref(p) into v_vozen from vozen p where id_vozna = pa_id_vozna;
+  select ref(p) into v_vlak from vlak p where id_vlak = pa_id_vlak;
+  insert into vozen_vlak values(id_vozen_vlak_seq.nextval, v_vozen, v_vlak, pa_cas_od, pa_cas_do);
+end;
+/
+
+---------------------------------ZACIATOK DAVID-------------------------------------------------------------------
+CREATE OR REPLACE PROCEDURE gui_insert_vozen
+(
+  pa_id_vlastnik vlastnik.id_vlastnik%TYPE,
+  pa_id_typ_vozna typ_vozna.id_typu%TYPE,
+  pa_id_aktual_poloha poloha.id_poloha%TYPE,
+  pa_id OUT NUMBER
+)
+AS
+  v_vlastnik REF t_vlastnik;
+  v_typ_vozna REF t_typ_vozna;
+  v_aktual_poloha REF t_poloha;
+BEGIN
+  SELECT REF(p) INTO v_vlastnik FROM vlastnik p WHERE id_vlastnik = pa_id_vlastnik;
+  SELECT REF(p) INTO v_typ_vozna FROM typ_vozna p WHERE id_typu = pa_id_typ_vozna;
+  SELECT REF(p) INTO v_aktual_poloha FROM poloha p WHERE id_poloha = pa_id_aktual_poloha;
+  pa_id := id_vozna_seq.NEXTVAL;
+  INSERT INTO vozen VALUES(pa_id, v_vlastnik, v_typ_vozna, NULL, v_aktual_poloha, NULL, sysdate, sysdate, sysdate,null);
+END;
+/
+
+--1.1
+CREATE OR REPLACE PROCEDURE gui_daj_id_polohu
+(
+  pa_id_longitude poloha.gps_longitude%TYPE,
+  pa_id_latitude poloha.gps_latitude%TYPE,
+  pa_id OUT int
+)
+AS
+ v_poloha_id int;
+BEGIN
+ 
+ select value(p).id_poloha INTO v_poloha_id from poloha p
+   where p.GPS_LATITUDE = pa_id_latitude and
+         p.GPS_LONGITUDE = pa_id_longitude;
+  
+  pa_id := v_poloha_id;
+END;
+/
+
+
+
+
+
+--3
+CREATE OR REPLACE PROCEDURE gui_zarad_vozen_do_vlaku
+(
+  pa_id_vozna vozen.id_vozna%TYPE,
+  pa_id_vlaku vlak.id_vlak%TYPE,
+  pa_error OUT varchar2
+)
+AS
+  v_vozen REF t_vozen;
+  v_vlak REF t_vlak;
+  v_vozen_obj t_vozen;
+  v_vlak_obj t_vlak;
+  v_je_aktualne_zaradeny int;
+  
+BEGIN
+
+  pa_error := ' ';
+  select count(*) INTO v_je_aktualne_zaradeny from vozen_vlak p
+  where deref(p.vozen).id_vozna = pa_id_vozna and cas_do is null;
+  
+  if (v_je_aktualne_zaradeny > 0) then
+    pa_error := 'Nie je možné zaradiť vlak lebo už je aktuálne zaradený!';
+    return;
+  end if;
+  
+  SELECT REF(p) INTO v_vozen FROM vozen p WHERE id_vozna = pa_id_vozna;
+  SELECT REF(p) INTO v_vlak FROM vlak p WHERE id_vlak = pa_id_vlaku;
+  
+  SELECT deref(v_vozen) into v_vozen_obj from dual;
+  SELECT deref(v_vlak) into v_vlak_obj from dual;
+  
+  INSERT INTO vozen_vlak VALUES(id_vozen_vlak_seq.NEXTVAL,v_vozen,v_vlak,sysdate,null);
+        
+  v_vozen_obj.aktual_vlak := v_vlak;  
+  update vozen p set row = v_vozen_obj
+    where p.id_vozna = v_vozen_obj.id_vozna; 
+
+END;
+/
+
+--4
+CREATE OR REPLACE PROCEDURE gui_vyrad_vozen_z_vlaku
+(
+  pa_id_vozna vozen.id_vozna%TYPE
+)
+AS
+  v_vozen_vlak_riadok t_vozen_vlak;
+  v_vozen t_vozen;
+BEGIN
+ 
+  select value(p) INTO v_vozen_vlak_riadok from vozen_vlak p
+  where deref(p.vozen).id_vozna = pa_id_vozna and
+        cas_do is null;
+  
+  v_vozen_vlak_riadok.cas_do := sysdate;
+  
+  select deref(v_vozen_vlak_riadok.vozen) into v_vozen from dual;
+  
+  update vozen_vlak p set row = (v_vozen_vlak_riadok)
+    where p.id_vozen_vlak = (v_vozen_vlak_riadok).id_vozen_vlak;   
+
+  v_vozen.aktual_vlak := null;
+  update vozen p set row = v_vozen
+    where p.id_vozna = v_vozen.id_vozna; 
+END;
+/
+
+--5
+CREATE OR REPLACE PROCEDURE gui_presun_vozen_z_kolaje
+(
+  pa_id_vozna vozen.id_vozna%TYPE,
+  pa_id_kolaj_z kolaj.id_kolaj%TYPE,
+  pa_id_kolaj_na kolaj.id_kolaj%TYPE
+)
+AS
+ v_vozen_kolaj_riadok t_vozen_kolaj;
+ v_vozen t_vozen;
+ v_kolaj_z t_kolaj;
+ v_kolaj_na t_kolaj;
+ 
+ v_vozen_REF REF t_vozen;
+ v_kolaj_z_REF REF t_kolaj;
+ v_kolaj_na_REF REF t_kolaj;
+BEGIN
+
+ select ref(p) INTO v_kolaj_z_REF from kolaj p
+  where p.id_kolaj = pa_id_kolaj_z;
+
+ select ref(p) INTO v_kolaj_na_REF from kolaj p
+   where p.id_kolaj = pa_id_kolaj_na;
+  
+ select ref(p) INTO v_vozen_REF from vozen p
+   where p.id_vozna = pa_id_vozna; 
+  
+ select value(p) INTO v_vozen_kolaj_riadok from vozen_kolaj p
+  where deref(p.vozen).id_vozna = pa_id_vozna and
+        deref(p.kolaj).id_kolaj = pa_id_kolaj_z and
+        cas_do is null;
+ 
+ SELECT deref(v_vozen_REF) into v_vozen from dual;
+ SELECT deref(v_kolaj_z_REF ) into v_kolaj_z from dual;
+ SELECT deref(v_kolaj_na_REF) into v_kolaj_na from dual;
+ 
+  --najprv vozen kolaj ukoncim aktualnu
+  v_vozen_kolaj_riadok.cas_do := sysdate;
+  update vozen_kolaj p set row = v_vozen_kolaj_riadok
+    where p.id_vozen_kolaj = v_vozen_kolaj_riadok.id_vozen_kolaj; 
+
+  --pridam novy zaznam s novovou kolajou do vozen kolaj
+  INSERT into vozen_kolaj values(id_vozen_kolaj_seq.NEXTVAL, 
+                                 v_vozen_REF,v_kolaj_na_REF,
+                                 sysdate,null);
+                                 
+  --updatovat vozen aby tam bola aktualna kolaj
+  v_vozen.aktual_kolaj := v_kolaj_na_REF;
+  update vozen p set row = v_vozen
+    where p.id_vozna = v_vozen.id_vozna; 
+END;
+/
+
+--4.1 Priradenie vozna na kolaj
+CREATE OR REPLACE PROCEDURE gui_pridat_vozen_na_kolaj
+(
+  pa_id_vozna vozen.id_vozna%TYPE,
+  pa_id_kolaj_na kolaj.id_kolaj%TYPE
+)
+AS
+ v_vozen_kolaj_riadok t_vozen_kolaj;
+ v_vozen t_vozen;
+ 
+ v_vozen_REF REF t_vozen;
+ v_kolaj_na_REF REF t_kolaj;
+BEGIN
+ 
+ select ref(p) INTO v_kolaj_na_REF from kolaj p
+   where p.id_kolaj = pa_id_kolaj_na;
+  
+ select ref(p) INTO v_vozen_REF from vozen p
+   where p.id_vozna = pa_id_vozna; 
+   
+ INSERT into vozen_kolaj values(id_vozen_kolaj_seq.NEXTVAL, 
+                                v_vozen_REF,v_kolaj_na_REF,
+                                sysdate,null);  
+ SELECT deref(v_vozen_REF) into v_vozen from dual;
+ --updatovat vozen aby tam bola aktualna kolaj
+  v_vozen.aktual_kolaj := v_kolaj_na_REF;
+  update vozen p set row = v_vozen
+    where p.id_vozna = v_vozen.id_vozna; 
+                                
+END;
+/
+-------------------BLOB---------------------
+DROP DIRECTORY DB_DIR;
+CREATE DIRECTORY DB_DIR AS 'C:\TEMP\databazy\';
+--connect / as sysdba;
+--GRANT READ, WRITE ON DIRECTORY DB_DIR TO david;
+
+CREATE OR REPLACE PROCEDURE gui_uloz_pracovnika
+(
+  pa_meno varchar2,
+  pa_priezvisko varchar2,
+  pa_src_file_path varchar2
+)
+AS
+  src_lob  BFILE; 
+  dest_lob BLOB;
+BEGIN
+  src_lob := BFILENAME('DB_DIR', pa_src_file_path);
+  
+  INSERT INTO pracovnik VALUES(id_pracovnik_seq.NEXTVAL, pa_meno, pa_priezvisko, EMPTY_BLOB())
+     RETURNING fotka INTO dest_lob;
+
+  DBMS_LOB.fileopen(src_lob, DBMS_LOB.file_readonly);
+  DBMS_LOB.loadfromfile(dest_lob, src_lob, DBMS_LOB.getlength(src_lob));
+  DBMS_LOB.fileclose(src_lob);
+
+  COMMIT;
+END;
+/
+
+--------------------------------------KONIEC DAVID-------------------------------------------------------------
+
+
+
+
+
+

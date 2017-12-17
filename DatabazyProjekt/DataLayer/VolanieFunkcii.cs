@@ -90,7 +90,67 @@ namespace DataLayer
 
         }
 
-       
+        public List<Tuple<int, string>> DajVsetkyTypyVoznov()
+        {
+            List<Tuple<int, string>> ret = new List<Tuple<int, string>>();
+            OracleDataReader oraReader = null;
+            try
+            {
+                _connection.Open();
+
+                OracleCommand oraCommand = new OracleCommand("SELECT id_typu,typ_nazov FROM typ_vozna", _connection);
+
+                oraReader = oraCommand.ExecuteReader();
+
+                if (oraReader.HasRows)
+                {
+                    while (oraReader.Read())
+                    {
+                        var idcko = oraReader.GetInt32(0);
+                        var nazov = oraReader.GetString(1);
+                        ret.Add(new Tuple<int, string>(idcko, nazov));
+                    }
+                }
+
+            }
+            finally
+            {
+                oraReader.Close();
+                _connection.Close();
+            }
+            return ret;
+        }
+
+        public List<Tuple<int,string>> DajVsetkychVlastnikov()
+        {
+            List<Tuple<int, string>> ret  = new List<Tuple<int, string>>();
+            OracleDataReader oraReader = null;
+            try
+            {
+                _connection.Open();
+
+                OracleCommand oraCommand = new OracleCommand("SELECT id_vlastnik,nazov FROM vlastnik",_connection);
+                
+                oraReader = oraCommand.ExecuteReader();
+
+                if (oraReader.HasRows)
+                {
+                    while (oraReader.Read())
+                    {
+                        var idcko = oraReader.GetInt32(0);
+                        var nazov = oraReader.GetString(1);
+                        ret.Add(new Tuple<int, string>(idcko, nazov));
+                    }
+                }
+                
+            }
+            finally
+            {
+                oraReader.Close();
+                _connection.Close();
+            }
+            return ret;
+        }
 
         public void VlozZamestnanca(string meno,
                                     string priezvisko,
@@ -154,6 +214,8 @@ namespace DataLayer
             }
 
         }
+
+
 
         public void PresunVozen(int idVozna, int idKolajZ, int idKolajNa)
         {
