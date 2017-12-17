@@ -8,6 +8,7 @@ using System.Data;
 using System.IO;
 using System.Windows;
 using System.Windows.Media.Imaging;
+using GUI.VypisVstupy;
 
 namespace GUI
 {
@@ -167,10 +168,17 @@ namespace GUI
     
 
 		// vypisy
-	    private void PrintButton_OnClick(object sender, RoutedEventArgs e)
+	    private void VypisPolohuVoznovButton_OnClick(object sender, RoutedEventArgs e)
 	    {
-		    ReportDataGrid.ItemsSource = CoreApp.Instance.VypisAktualnuPolohuVoznov(null, null).Tables[0].DefaultView;
+		    var form = new VypisAktualnuPolohuVoznov(Vypis, Vlastnici, TypyVoznov);
+		    form.ShowDialog();
 	    }
+
+	    private void Vypis(DataSet dataSet)
+	    {
+			ReportDataGrid.ItemsSource = dataSet.Tables[0].DefaultView;
+		}
+		// vypis koniec
 
         private void Button_Click_5(object sender, RoutedEventArgs e)
         {
