@@ -78,6 +78,11 @@ namespace Core
 	    {
 		    return _volanieFunkcii.DajVozneVoVlaku(idVlaku, nazovTypuVlaku, nazovTypuVozna, nazovVlastnika, casOd, casDo);
 	    }
+
+	    public DataSet VypisInformacieOVlakoch(int idVlaku, string nazovTypuVlaku)
+	    {
+		    return _volanieFunkcii.DajInformacieOVlakoch(idVlaku, nazovTypuVlaku);
+	    }
 		// vypisy koniec
 
 		public void PresunVozen(int idVozna, int idKolajZ, int idKolajNa)

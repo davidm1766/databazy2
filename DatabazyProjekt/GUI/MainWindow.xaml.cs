@@ -185,6 +185,12 @@ namespace GUI
 		    form.ShowDialog();
 	    }
 
+	    private void VypisInformacieOVlakochButton_OnClick(object sender, RoutedEventArgs e)
+	    {
+		    var form = new VypisInformacieOVlakoch(Vypis, TypyVlakov);
+		    form.ShowDialog();
+	    }
+
 		private void Vypis(DataSet dataSet)
 	    {
 			ReportDataGrid.ItemsSource = dataSet.Tables[0].DefaultView;

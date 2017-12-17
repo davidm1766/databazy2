@@ -54,6 +54,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="VypisVstupy\VypisInformacieOVlakoch.xaml.cs">
+      <DependentUpon>VypisInformacieOVlakoch.xaml</DependentUpon>
+    </Compile>
     <Compile Include="VypisVstupy\VypisInformacieOVoznochForm.xaml.cs">
       <DependentUpon>VypisInformacieOVoznochForm.xaml</DependentUpon>
     </Compile>
@@ -82,6 +85,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="VypisVstupy\VypisInformacieOVlakoch.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="VypisVstupy\VypisInformacieOVoznochForm.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

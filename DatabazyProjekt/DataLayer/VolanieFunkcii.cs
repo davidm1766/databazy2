@@ -484,7 +484,28 @@ namespace DataLayer
 			cmd.Parameters.Add("result", OracleDbType.RefCursor).Direction = ParameterDirection.ReturnValue;
 
 		    return DajDataSet(cmd);
-	    }	    
+	    }
+
+	    public DataSet DajInformacieOVlakoch(int idVlaku, string typVlaku)
+	    {
+		    var cmd = new OracleCommand
+		    {
+			    Connection = _connection,
+			    CommandText = "vypis_informacie_o_vlakoch",
+			    CommandType = CommandType.StoredProcedure,
+			    BindByName = true
+		    };
+
+		    if (idVlaku > 0)
+		    {
+			    cmd.Parameters.Add("pa_id_vlaku", OracleDbType.Int32, ParameterDirection.Input).Value = idVlaku;
+		    }		    
+
+		    cmd.Parameters.Add("pa_nazov_typu", OracleDbType.Varchar2, ParameterDirection.Input).Value = typVlaku;		    
+		    cmd.Parameters.Add("result", OracleDbType.RefCursor).Direction = ParameterDirection.ReturnValue;
+
+		    return DajDataSet(cmd);
+	    }
 
 		public DataSet DajVozneVStanici(string nazovStanice, DateTime casOd, DateTime casDo, string nazovVlastnika, string nazovTypuVozna)
 		{
