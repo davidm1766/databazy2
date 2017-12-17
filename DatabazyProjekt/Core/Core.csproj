@@ -63,6 +63,7 @@
   <ItemGroup>
     <Compile Include="CoreApp.cs" />
     <Compile Include="Models\Poloha.cs" />
+    <Compile Include="Models\Stanica.cs" />
     <Compile Include="Models\TypVozna.cs" />
     <Compile Include="Models\Vlastnik.cs" />
     <Compile Include="Models\Vozen.cs" />

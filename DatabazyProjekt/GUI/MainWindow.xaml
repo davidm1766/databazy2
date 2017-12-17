@@ -135,7 +135,15 @@
                     <DataGrid Grid.Row="0" Name="ReportDataGrid">
                     </DataGrid>
 
-                    <Button Grid.Row="1" Click="VypisPolohuVoznovButton_OnClick">Vypis polohu voznov</Button>
+                    <Grid Grid.Row="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+
+                        <Button Grid.Column="0" Click="VypisPolohuVoznovButton_OnClick">Vypis polohu voznov</Button>
+                        <Button Grid.Column="1" Click="VypisVozneVStanici_OnClick">Vypis vozne v stanici</Button>
+                    </Grid>
                 </Grid>
             </TabItem>
             <TabItem Header="Zamestnanec nájdi">

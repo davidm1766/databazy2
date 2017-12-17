@@ -152,7 +152,38 @@ namespace DataLayer
             return ret;
         }
 
-        public void VlozZamestnanca(string meno,
+	    public List<Tuple<int, string>> DajVsetkyStanice()
+	    {
+			List<Tuple<int, string>> ret = new List<Tuple<int, string>>();
+		    OracleDataReader oraReader = null;
+		    try
+		    {
+			    _connection.Open();
+
+			    OracleCommand oraCommand = new OracleCommand("SELECT id_stanica,nazov FROM stanica", _connection);
+
+			    oraReader = oraCommand.ExecuteReader();
+
+			    if (oraReader.HasRows)
+			    {
+				    while (oraReader.Read())
+				    {
+					    var idcko = oraReader.GetInt32(0);
+					    var nazov = oraReader.GetString(1);
+					    ret.Add(new Tuple<int, string>(idcko, nazov));
+				    }
+			    }
+
+		    }
+		    finally
+		    {
+			    oraReader?.Close();
+			    _connection.Close();
+		    }
+		    return ret;
+		}
+
+		public void VlozZamestnanca(string meno,
                                     string priezvisko,
                                     string cestaKuFotke)
         {
@@ -386,6 +417,27 @@ namespace DataLayer
 
 		    return DajDataSet(cmd);
 	    }
+
+		public DataSet DajVozneVStanici(string nazovStanice, DateTime casOd, DateTime casDo, string nazovVlastnika, string nazovTypuVozna)
+		{
+			var cmd = new OracleCommand()
+			{
+				Connection = _connection,
+				CommandText = "vypis_vozne_v_stanici",
+				CommandType = CommandType.StoredProcedure,
+				BindByName = true
+
+			};
+
+			cmd.Parameters.Add("pa_nazov_stanice", OracleDbType.Varchar2, ParameterDirection.Input).Value = nazovStanice;
+			cmd.Parameters.Add("pa_nazov_vlastnika", OracleDbType.Varchar2, ParameterDirection.Input).Value = nazovVlastnika;
+			cmd.Parameters.Add("pa_nazov_typu_vozna", OracleDbType.Varchar2, ParameterDirection.Input).Value = nazovTypuVozna;
+			cmd.Parameters.Add("pa_cas_od", OracleDbType.Date, ParameterDirection.Input).Value = casOd;
+			cmd.Parameters.Add("pa_cas_do", OracleDbType.Date, ParameterDirection.Input).Value = casDo;
+			cmd.Parameters.Add("result", OracleDbType.RefCursor).Direction = ParameterDirection.ReturnValue;
+
+			return DajDataSet(cmd);
+		}
 
 	    private DataSet DajDataSet(OracleCommand cmd)
 	    {

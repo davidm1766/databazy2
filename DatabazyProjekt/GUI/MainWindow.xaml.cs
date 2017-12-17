@@ -36,15 +36,22 @@ namespace GUI
         /// <summary>
         ///     Vsetky typu voznov z tabulky typ_vozna
         /// </summary>
-        public ObservableCollection<TypVozna> TypyVoznov { get; set; }
+        public ObservableCollection<TypVozna> TypyVoznov { get; set; }        
 
-        
+		/// <summary>
+		/// Všetky stanica.
+		/// </summary>
+	    public ObservableCollection<Stanica> Stanice { get; set; }
+
+
+
         public MainWindow(string meno, string heslo)
         {
             InitializeComponent();
             CoreApp.Register(meno,heslo);
             TypyVoznov = NacitajTypyVoznovZDB();
             Vlastnici = NacitajVlastnikovZDB();
+	        Stanice = NacitajStaniceZDB();
             Vozen = new Vozen() { AktualnaPoloha=new Poloha()};
             ZamestnanecNovy = new Zamestnanec();
             DataContext = this;
@@ -81,9 +88,14 @@ namespace GUI
         {
             return CoreApp.Instance.DajVsetkychVlastnikov();
         }
-        
-        
-        private void Button_Click_1(object sender, RoutedEventArgs e)
+
+	    private ObservableCollection<Stanica> NacitajStaniceZDB()
+	    {
+		    return CoreApp.Instance.DajVsetkyStanice();
+	    }
+
+
+		private void Button_Click_1(object sender, RoutedEventArgs e)
         {
             //vyradenie vozna z prevadzky
             try
@@ -151,7 +163,13 @@ namespace GUI
 		    form.ShowDialog();
 	    }
 
-	    private void Vypis(DataSet dataSet)
+	    private void VypisVozneVStanici_OnClick(object sender, RoutedEventArgs e)
+	    {
+		    var form = new VypisVozneVStaniciForm(Vypis, Vlastnici, TypyVoznov, Stanice);
+		    form.ShowDialog();
+	    }
+
+		private void Vypis(DataSet dataSet)
 	    {
 			ReportDataGrid.ItemsSource = dataSet.Tables[0].DefaultView;
 		}
