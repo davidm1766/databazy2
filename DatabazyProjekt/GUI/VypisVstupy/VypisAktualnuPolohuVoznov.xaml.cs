@@ -44,13 +44,21 @@ namespace GUI.VypisVstupy
 		private void OKButton_OnClick(object sender, RoutedEventArgs e)
 		{
 			DataSet dataSet;
+
 			if (string.IsNullOrWhiteSpace(IdVozna))
 			{
+				// ak id vozna nie je vyplnene
 				dataSet = CoreApp.Instance.VypisAktualnuPolohuVoznov(VlastnikVozna?.NazovVlastnika, TypVozna?.NazovTypuVozna);
+			}
+			else if (int.TryParse(IdVozna, out var id))
+			{
+				// ak formular obsahuje validne id vozna
+				dataSet = CoreApp.Instance.VypisAktualnuPolohuVozna(id);
 			}
 			else
 			{
-				dataSet = CoreApp.Instance.VypisAktualnuPolohuVoznov(VlastnikVozna.NazovVlastnika, TypVozna.NazovTypuVozna);
+				MessageBox.Show("Id vozňa musí byť celé číslo.", "Chyba", MessageBoxButton.OK, MessageBoxImage.Error);
+				return;
 			}
 
 			_vypisAction(dataSet);
