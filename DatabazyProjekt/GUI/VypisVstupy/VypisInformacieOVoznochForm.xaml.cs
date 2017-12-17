@@ -25,17 +25,24 @@ namespace GUI.VypisVstupy
 	{
 		public ObservableCollection<Vlastnik> Vlastnici { get; set; }
 		public ObservableCollection<TypVozna> TypyVoznov { get; set; }
+		public ObservableCollection<Stanica> Stanice { get; set; }
 
 		public string IdVozna { get; set; }
 		public Vlastnik VlastnikVozna { get; set; }
 		public TypVozna TypVozna { get; set; }
+		public Stanica Stanica { get; set; }
+		public bool Vyradene { get; set; }
+		public bool Nevyradene { get; set; }
+		public bool VyradeneNevyradene { get; set; } = true;
 
-		private Action<DataSet> _vypisAction; 
+		private readonly Action<DataSet> _vypisAction; 
 
-		public VypisInformacieOVoznochForm(Action<DataSet> vypisAction, Collection<Vlastnik> vlastnici, Collection<TypVozna> typyVozna)
+		public VypisInformacieOVoznochForm(Action<DataSet> vypisAction, ObservableCollection<Vlastnik> vlastnici, 
+			ObservableCollection<TypVozna> typyVozna, ObservableCollection<Stanica> stanice)
 		{
-			Vlastnici = new ObservableCollection<Vlastnik>(vlastnici);
-			TypyVoznov = new ObservableCollection<TypVozna>(typyVozna);
+			Vlastnici = vlastnici;
+			TypyVoznov = typyVozna;
+			Stanice = stanice;
 			_vypisAction = vypisAction;
 			InitializeComponent();
 			DataContext = this;
@@ -51,8 +58,20 @@ namespace GUI.VypisVstupy
 				return;
 			}
 
+			bool? vyradene = null;
+
+			if (Vyradene)
+			{
+				vyradene = true;
+			}
+
+			if (Nevyradene)
+			{
+				vyradene = false;
+			}
+
 			DataSet dataSet =
-				CoreApp.Instance.VypisInformacieOVoznoch(idVozna, VlastnikVozna?.NazovVlastnika, TypVozna?.NazovTypuVozna);	
+				CoreApp.Instance.VypisInformacieOVoznoch(idVozna, VlastnikVozna?.NazovVlastnika, TypVozna?.NazovTypuVozna, Stanica?.Nazov, vyradene);	
 
 			_vypisAction(dataSet);
 			DialogResult = true;

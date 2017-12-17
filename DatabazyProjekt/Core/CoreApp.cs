@@ -64,9 +64,9 @@ namespace Core
 
 		// vypisy	    
 
-	    public DataSet VypisInformacieOVoznoch(int idVozna, string nazovVlastnika, string nazovTypuVozna)
+	    public DataSet VypisInformacieOVoznoch(int idVozna, string nazovVlastnika, string nazovTypuVozna, string nazovStanice, bool? vyradene)
 	    {
-		    return _volanieFunkcii.DajInformacieOVoznoch(idVozna, nazovVlastnika, nazovTypuVozna);
+		    return _volanieFunkcii.DajInformacieOVoznoch(idVozna, nazovVlastnika, nazovTypuVozna, nazovStanice, vyradene);
 	    }
 
 	    public DataSet VypisVozneVStanici(string nazovStanice, DateTime casOd, DateTime casDo, string nazovVlastnika, string nazovTypuVozna)

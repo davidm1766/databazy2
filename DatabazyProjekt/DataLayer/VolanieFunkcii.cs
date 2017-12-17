@@ -458,7 +458,7 @@ namespace DataLayer
 
 		// vypisy
 
-	    public DataSet DajInformacieOVoznoch(int idVozna, string nazovVlastnika, string nazovTypuVozna)
+	    public DataSet DajInformacieOVoznoch(int idVozna, string nazovVlastnika, string nazovTypuVozna, string nazovStanice, bool? vyradene)
 	    {
 			var cmd = new OracleCommand
 			{
@@ -472,9 +472,15 @@ namespace DataLayer
 		    {
 			    cmd.Parameters.Add("pa_id_vozna", OracleDbType.Int32, ParameterDirection.Input).Value = idVozna;
 			}
-			
-		    cmd.Parameters.Add("pa_nazov_vlastnika", OracleDbType.Varchar2, ParameterDirection.Input).Value = nazovVlastnika;
+
+		    if (vyradene != null)
+		    {
+			    cmd.Parameters.Add("pa_odstaveny", OracleDbType.Char, ParameterDirection.Input).Value = (vyradene == true ? 'y' : 'n');
+			}
+		    
+			cmd.Parameters.Add("pa_nazov_vlastnika", OracleDbType.Varchar2, ParameterDirection.Input).Value = nazovVlastnika;
 		    cmd.Parameters.Add("pa_nazov_typu_vozna", OracleDbType.Varchar2, ParameterDirection.Input).Value = nazovTypuVozna;
+		    cmd.Parameters.Add("pa_nazov_stanice", OracleDbType.Varchar2, ParameterDirection.Input).Value = nazovStanice;
 			cmd.Parameters.Add("result", OracleDbType.RefCursor).Direction = ParameterDirection.ReturnValue;
 
 		    return DajDataSet(cmd);

@@ -169,7 +169,7 @@ namespace GUI
 		// vypisy
 	    private void VypisInformacieOVoznochButton_OnClick(object sender, RoutedEventArgs e)
 	    {
-		    var form = new VypisInformacieOVoznochForm(Vypis, Vlastnici, TypyVoznov);
+		    var form = new VypisInformacieOVoznochForm(Vypis, Vlastnici, TypyVoznov, Stanice);
 		    form.ShowDialog();
 	    }
 
