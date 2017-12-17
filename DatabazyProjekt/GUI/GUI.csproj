@@ -57,6 +57,9 @@
     <Compile Include="VypisVstupy\VypisAktualnuPolohuVoznov.xaml.cs">
       <DependentUpon>VypisAktualnuPolohuVoznov.xaml</DependentUpon>
     </Compile>
+    <Compile Include="VypisVstupy\VypisVozneVoVlakuForm.xaml.cs">
+      <DependentUpon>VypisVozneVoVlakuForm.xaml</DependentUpon>
+    </Compile>
     <Compile Include="VypisVstupy\VypisVozneVStaniciForm.xaml.cs">
       <DependentUpon>VypisVozneVStaniciForm.xaml</DependentUpon>
     </Compile>
@@ -80,6 +83,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="VypisVstupy\VypisAktualnuPolohuVoznov.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="VypisVstupy\VypisVozneVoVlakuForm.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -77,6 +77,11 @@ namespace Core
 	    {
 		    return _volanieFunkcii.DajVozneVStanici(nazovStanice, casOd, casDo, nazovVlastnika, nazovTypuVozna);
 	    }
+
+	    public DataSet VypisVozneVoVlaku(int idVlaku, string nazovTypuVlaku, string nazovTypuVozna, string nazovVlastnika, DateTime casOd, DateTime casDo)
+	    {
+		    return _volanieFunkcii.DajVozneVoVlaku(idVlaku, nazovTypuVlaku, nazovTypuVozna, nazovVlastnika, casOd, casDo);
+	    }
 		// vypisy koniec
 
 		public void PresunVozen(int idVozna, int idKolajZ, int idKolajNa)
@@ -113,6 +118,16 @@ namespace Core
 			}
 		    return ret;
 	    }
+
+	    public ObservableCollection<TypVlaku> DajVsetkyTypyVlakov()
+	    {
+			ObservableCollection<TypVlaku> ret = new ObservableCollection<TypVlaku>();
+		    foreach (var typVlaku in _volanieFunkcii.DajVsetkyTypyVlakov())
+		    {
+			    ret.Add(new TypVlaku() { IdTypuVlaku = typVlaku.Item1, NazovTypuVlaku = typVlaku.Item2 });
+		    }
+		    return ret;
+		}
 
 		public void PostavVozenNaKolaj(int idVozna, int idKolajNa)
         {

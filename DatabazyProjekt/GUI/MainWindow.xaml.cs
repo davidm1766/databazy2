@@ -43,6 +43,10 @@ namespace GUI
 		/// </summary>
 	    public ObservableCollection<Stanica> Stanice { get; set; }
 
+		/// <summary>
+		/// Vsetky typy vlakov.
+		/// </summary>
+	    public ObservableCollection<TypVlaku> TypyVlakov { get; set; }
 
 
         public MainWindow(string meno, string heslo)
@@ -52,6 +56,7 @@ namespace GUI
             TypyVoznov = NacitajTypyVoznovZDB();
             Vlastnici = NacitajVlastnikovZDB();
 	        Stanice = NacitajStaniceZDB();
+	        TypyVlakov = NacitajTypyVlakovZDB();
             Vozen = new Vozen() { AktualnaPoloha=new Poloha()};
             ZamestnanecNovy = new Zamestnanec();
             DataContext = this;
@@ -92,6 +97,11 @@ namespace GUI
 	    private ObservableCollection<Stanica> NacitajStaniceZDB()
 	    {
 		    return CoreApp.Instance.DajVsetkyStanice();
+	    }
+
+	    private ObservableCollection<TypVlaku> NacitajTypyVlakovZDB()
+	    {
+		    return CoreApp.Instance.DajVsetkyTypyVlakov();
 	    }
 
 
@@ -166,6 +176,12 @@ namespace GUI
 	    private void VypisVozneVStanici_OnClick(object sender, RoutedEventArgs e)
 	    {
 		    var form = new VypisVozneVStaniciForm(Vypis, Vlastnici, TypyVoznov, Stanice);
+		    form.ShowDialog();
+	    }
+
+	    private void VypisVozneVoVlakuButton_OnClick(object sender, RoutedEventArgs e)
+	    {
+		    var form = new VypisVozneVoVlakuForm(Vypis, TypyVlakov, TypyVoznov, Vlastnici);
 		    form.ShowDialog();
 	    }
 

@@ -139,10 +139,12 @@
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition/>
                             <ColumnDefinition/>
+                            <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
 
                         <Button Grid.Column="0" Click="VypisPolohuVoznovButton_OnClick">Vypis polohu voznov</Button>
                         <Button Grid.Column="1" Click="VypisVozneVStanici_OnClick">Vypis vozne v stanici</Button>
+                        <Button Grid.Column="2" Click="VypisVozneVoVlakuButton_OnClick">Vypis vozne vo vlaku</Button>
                     </Grid>
                 </Grid>
             </TabItem>
