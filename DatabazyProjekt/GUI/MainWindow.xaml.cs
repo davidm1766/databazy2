@@ -167,9 +167,9 @@ namespace GUI
     
 
 		// vypisy
-	    private void VypisPolohuVoznovButton_OnClick(object sender, RoutedEventArgs e)
+	    private void VypisInformacieOVoznochButton_OnClick(object sender, RoutedEventArgs e)
 	    {
-		    var form = new VypisAktualnuPolohuVoznov(Vypis, Vlastnici, TypyVoznov);
+		    var form = new VypisInformacieOVoznochForm(Vypis, Vlastnici, TypyVoznov);
 		    form.ShowDialog();
 	    }
 

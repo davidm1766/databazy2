@@ -62,15 +62,11 @@ namespace Core
             _volanieFunkcii.VyradVozenZVlaku(idVozna);
         }
 
-		// vypisy
-	    public DataSet VypisAktualnuPolohuVoznov(string nazovVlastnika, string nazovTypu)
-	    {
-		    return _volanieFunkcii.DajPolohuVoznov(nazovVlastnika, nazovTypu);
-	    }
+		// vypisy	    
 
-	    public DataSet VypisAktualnuPolohuVozna(int idVozna)
+	    public DataSet VypisInformacieOVoznoch(int idVozna, string nazovVlastnika, string nazovTypuVozna)
 	    {
-		    return _volanieFunkcii.DajPolohuVozna(idVozna);
+		    return _volanieFunkcii.DajInformacieOVoznoch(idVozna, nazovVlastnika, nazovTypuVozna);
 	    }
 
 	    public DataSet VypisVozneVStanici(string nazovStanice, DateTime casOd, DateTime casDo, string nazovVlastnika, string nazovTypuVozna)

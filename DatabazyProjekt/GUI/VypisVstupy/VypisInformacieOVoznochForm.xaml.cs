@@ -21,7 +21,7 @@ namespace GUI.VypisVstupy
 	/// <summary>
 	/// Interaction logic for VypisAktualnuPolohuVoznov.xaml
 	/// </summary>
-	public partial class VypisAktualnuPolohuVoznov : Window
+	public partial class VypisInformacieOVoznochForm : Window
 	{
 		public ObservableCollection<Vlastnik> Vlastnici { get; set; }
 		public ObservableCollection<TypVozna> TypyVoznov { get; set; }
@@ -32,7 +32,7 @@ namespace GUI.VypisVstupy
 
 		private Action<DataSet> _vypisAction; 
 
-		public VypisAktualnuPolohuVoznov(Action<DataSet> vypisAction, Collection<Vlastnik> vlastnici, Collection<TypVozna> typyVozna)
+		public VypisInformacieOVoznochForm(Action<DataSet> vypisAction, Collection<Vlastnik> vlastnici, Collection<TypVozna> typyVozna)
 		{
 			Vlastnici = new ObservableCollection<Vlastnik>(vlastnici);
 			TypyVoznov = new ObservableCollection<TypVozna>(typyVozna);
@@ -42,24 +42,17 @@ namespace GUI.VypisVstupy
 		}
 
 		private void OKButton_OnClick(object sender, RoutedEventArgs e)
-		{
-			DataSet dataSet;
+		{			
+			int idVozna = -1;
 
-			if (string.IsNullOrWhiteSpace(IdVozna))
+			if (!string.IsNullOrWhiteSpace(IdVozna) && !int.TryParse(IdVozna, out idVozna))
 			{
-				// ak id vozna nie je vyplnene
-				dataSet = CoreApp.Instance.VypisAktualnuPolohuVoznov(VlastnikVozna?.NazovVlastnika, TypVozna?.NazovTypuVozna);
-			}
-			else if (int.TryParse(IdVozna, out var id))
-			{
-				// ak formular obsahuje validne id vozna
-				dataSet = CoreApp.Instance.VypisAktualnuPolohuVozna(id);
-			}
-			else
-			{
-				MessageBox.Show("Id vozňa musí byť celé číslo.", "Chyba", MessageBoxButton.OK, MessageBoxImage.Error);
+				MessageBox.Show("Id vozna musí byť celé číslo.", "Chyba", MessageBoxButton.OK, MessageBoxImage.Error);
 				return;
 			}
+
+			DataSet dataSet =
+				CoreApp.Instance.VypisInformacieOVoznoch(idVozna, VlastnikVozna?.NazovVlastnika, TypVozna?.NazovTypuVozna);	
 
 			_vypisAction(dataSet);
 			DialogResult = true;
