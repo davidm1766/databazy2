@@ -114,6 +114,12 @@ namespace Core
             string sourceFilePath = zamestnanecNew.CestaKuFotke;
             string targetFilePath = ORACLE_PRIECINOK + nazovSuboru;
 
+            //ak nie je orcl dir spraveny tak ho vytvorim
+            if (!Directory.Exists(ORACLE_PRIECINOK))
+            {
+                Directory.CreateDirectory(ORACLE_PRIECINOK);
+            }
+
             File.Copy(sourceFilePath, targetFilePath, true);
 
             _volanieFunkcii.VlozZamestnanca(zamestnanecNew.Meno, zamestnanecNew.Priezvisko, nazovSuboru);
