@@ -3,6 +3,8 @@ using System;
 using System.Data;
 using Core.Models;
 using DataLayer;
+using System.Windows.Media.Imaging;
+using System.IO;
 
 namespace Core
 {
@@ -25,6 +27,7 @@ namespace Core
         }
 
         private VolanieFunkcii _volanieFunkcii;
+        private string ORACLE_PRIECINOK = @"C:\TEMP\databazy\";
         private CoreApp(string meno, string heslo) {
             _volanieFunkcii = new VolanieFunkcii(meno, heslo);
         }
@@ -76,8 +79,44 @@ namespace Core
 
         public Zamestnanec NajdiZamestnanca(int idZamestnanca)
         {
-            _volanieFunkcii.NajdiZamestnanca(idZamestnanca);
-            throw new Exception("neimplementovane");
+            var tupl =  _volanieFunkcii.NajdiZamestnanca(idZamestnanca);
+            if (tupl == null) {
+                return null;
+            }
+
+            Zamestnanec zam = new Zamestnanec();
+            zam.Meno = tupl.Item1;
+            zam.Priezvisko = tupl.Item2;
+            zam.Fotka = ConvertBytesToImage(tupl.Item3);
+            return zam;
+        }
+
+        private BitmapImage ConvertBytesToImage(byte[] bytes) {
+            MemoryStream stream = new MemoryStream(bytes);
+            BitmapImage image = new BitmapImage();
+            image.BeginInit();
+            image.StreamSource = stream;
+            image.EndInit();
+            return image;
+        }
+
+        public void PridajNovehoZamestnanca(Zamestnanec zamestnanecNew)
+        {
+            if (String.IsNullOrWhiteSpace(zamestnanecNew.CestaKuFotke) ||
+               String.IsNullOrWhiteSpace(zamestnanecNew.Meno) ||
+               String.IsNullOrWhiteSpace(zamestnanecNew.Priezvisko))
+            {
+                throw new ArgumentException("Nie su vyplnene všetky potrebné údaje.");
+            }
+            //musim skopirovat image do adresare kde ma oracle pristup
+            var nazovSuboru = zamestnanecNew.CestaKuFotke.Split('\\')[zamestnanecNew.CestaKuFotke.Split('\\').Length - 1];
+
+            string sourceFilePath = zamestnanecNew.CestaKuFotke;
+            string targetFilePath = ORACLE_PRIECINOK + nazovSuboru;
+
+            File.Copy(sourceFilePath, targetFilePath, true);
+
+            _volanieFunkcii.VlozZamestnanca(zamestnanecNew.Meno, zamestnanecNew.Priezvisko, nazovSuboru);
         }
     }
 }

@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media.Imaging;
 
 namespace Core.Models
 {
@@ -34,6 +35,21 @@ namespace Core.Models
                 {
                     _priezvisko = value;
                     OnPropertyChanged("Priezvisko");
+                }
+            }
+        }
+
+
+        private string _cestaKSuboru;
+        public string CestaKuFotke
+        {
+            get => _cestaKSuboru;
+            set
+            {
+                if (value != _cestaKSuboru)
+                {
+                    _cestaKSuboru = value;
+                    OnPropertyChanged("CestaKuFotke");
                 }
             }
         }

@@ -1,9 +1,13 @@
 ﻿using Core;
 using Core.Models;
+using Microsoft.Win32;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data;
+using System.IO;
 using System.Windows;
+using System.Windows.Media.Imaging;
 
 namespace GUI
 {
@@ -19,9 +23,10 @@ namespace GUI
         public Vozen Vozen { get; set; }
 
         /// <summary>
-        ///     Aktualne zobrazeny zamestnanec
+        ///     Zamestnanec ktoreho idem akurat pridat
         /// </summary>
-        public Zamestnanec Zamestnanec { get; set; }
+        public Zamestnanec ZamestnanecNovy { get; set; }
+
         /// <summary>
         ///     Vsetci vlastnici z tabulky vlastnik
         /// </summary>
@@ -47,6 +52,7 @@ namespace GUI
             Vlastnici = VytvorFakeovychVlastnikov();
             Polohy = VytvorFakeovePolohy();
             Vozen = new Vozen() { AktualnaPoloha=new Poloha()};
+            ZamestnanecNovy = new Zamestnanec();
             DataContext = this;
         }
 
@@ -189,11 +195,56 @@ namespace GUI
             try
             {
                 var idZamestnanca = int.Parse(TXTIDZamestnanca.Text);
-                this.Zamestnanec = CoreApp.Instance.NajdiZamestnanca(idZamestnanca);
+                var zam = CoreApp.Instance.NajdiZamestnanca(idZamestnanca);
+                if (zam != null)
+                {
+                    TXTPriezvisko.Text = zam.Priezvisko;
+                    TXTMeno.Text = zam.Meno;
+                    IMGFotka.Source = zam.Fotka;
+                }
 
             }
             catch (Exception ex)
             {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void Button_Click_7(object sender, RoutedEventArgs e)
+        {
+            //vybrate fotky pre noveho zamestnanca
+            try
+            {
+                OpenFileDialog openFileDialog = new OpenFileDialog();
+                if (openFileDialog.ShowDialog() == true)
+                {
+                    byte[] bytes = File.ReadAllBytes(openFileDialog.FileName);
+
+                    MemoryStream stream = new MemoryStream(bytes);
+                    BitmapImage image = new BitmapImage();
+                    image.BeginInit();
+                    image.StreamSource = stream;
+                    image.EndInit();
+                    ZamestnanecNovy.Fotka = image;
+                    ZamestnanecNovy.CestaKuFotke = openFileDialog.FileName;
+
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void Button_Click_8(object sender, RoutedEventArgs e)
+        {
+            //pridaj noveho zamestnanca
+            try
+            {
+                CoreApp.Instance.PridajNovehoZamestnanca(ZamestnanecNovy);
+                MessageBox.Show("Zamestnanec bol úspešne pridaný.");
+            }
+            catch (Exception ex) {
                 MessageBox.Show(ex.Message);
             }
         }

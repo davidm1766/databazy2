@@ -89,6 +89,9 @@ namespace DataLayer
 
 
         }
+
+       
+
         public void VlozZamestnanca(string meno,
                                     string priezvisko,
                                     string cestaKuFotke)
@@ -117,9 +120,39 @@ namespace DataLayer
 
         }
 
-        public void NajdiZamestnanca(int idZamestnanca)
+        public Tuple<string,string,byte[]> NajdiZamestnanca(int idZamestnanca)
         {
-            throw new NotImplementedException();
+            Tuple<string, string, byte[]> ret = null;
+            OracleDataReader oraReader = null;
+            try
+            {
+                _connection.Open();
+
+                OracleCommand oraCommand = new OracleCommand("SELECT meno,priezvisko,fotka FROM pracovnik WHERE id_pracovnika = :pracId", _connection);
+                oraCommand.Parameters.Add(new OracleParameter("pracId", idZamestnanca));
+
+                
+                oraReader = oraCommand.ExecuteReader();
+
+                if (oraReader.HasRows)
+                {
+                    while (oraReader.Read())
+                    {
+                        var meno = oraReader.GetString(0);
+                        var prizvisko = oraReader.GetString(1);
+                        byte[] fotka = (oraReader.GetOracleBlob(2)).Value;
+                        ret = new Tuple<string, string, byte[]>(meno,prizvisko,fotka);
+                        return ret;
+                    }
+                }
+                return ret;
+            }
+            finally
+            {
+                oraReader.Close();
+                _connection.Close();                
+            }
+
         }
 
         public void PresunVozen(int idVozna, int idKolajZ, int idKolajNa)

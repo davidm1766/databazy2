@@ -138,7 +138,7 @@
                     <Button Grid.Row="1" Click="PrintButton_OnClick">Vypis</Button>
                 </Grid>
             </TabItem>
-            <TabItem Header="Zamestnanec">
+            <TabItem Header="Zamestnanec nájdi">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="1*"/>
@@ -158,14 +158,42 @@
 
                     <Label Grid.Row="2" Grid.Column="0">Meno</Label>
                     <Label Grid.Row="3" Grid.Column="0">Priezvisko</Label>
-                    <Label Grid.Row="4" Grid.Column="0">Fotka</Label>
 
-                    <TextBlock Text="{Binding Zamestnanec.Meno}" Margin="5" Grid.Row="2" Grid.Column="1"/>
-                    <TextBlock Text="{Binding Zamestnanec.Priezvisko}" Margin="5" Grid.Row="3" Grid.Column="1"/>
-                    <Image  Source="{Binding Zamestnanec.Fotka}" Grid.Row="4" Grid.RowSpan="2" Grid.Column="1"  MaxWidth="200" MaxHeight="200"/>
+                    <TextBlock Name="TXTMeno" Margin="5" Grid.Row="2" Grid.Column="1"/>
+                    <TextBlock Name="TXTPriezvisko" Margin="5" Grid.Row="3" Grid.Column="1"/>
+                    <Image Name="IMGFotka" Grid.Row="4" Grid.ColumnSpan="2" Grid.RowSpan="2" Grid.Column="0"  />
 
                 </Grid>
                 
+            </TabItem>
+            <TabItem Header="Zmestnanec pridaj">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="3*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Label Grid.Row="0" Grid.Column="0">Meno</Label>
+                    <Label Grid.Row="1" Grid.Column="0">Priezvisko</Label>
+                    <Label Grid.Row="2" Grid.Column="0">Fotka</Label>
+
+                    <TextBox Name="TXTMenoZamestnancaNew" Text="{Binding ZamestnanecNovy.Meno}" Margin="5" Grid.Row="0" Grid.Column="1"/>
+                    <TextBox Name="TXTPriezviskoZamestnancaNew" Text="{Binding ZamestnanecNovy.Priezvisko}" Margin="5" Grid.Row="1" Grid.Column="1"/>
+                    <Button Margin="5" Grid.Row="2" Grid.Column="1" Click="Button_Click_7">Vybrať fotku</Button>
+
+                    <Button Margin="5" Grid.Row="3" Grid.Column="1" Click="Button_Click_8">Pridaj nového zamestnanca</Button>
+                    <Image  Source="{Binding ZamestnanecNovy.Fotka}" Grid.Row="4" Grid.RowSpan="2" Grid.Column="1"  MaxWidth="200" MaxHeight="200"/>
+
+                </Grid>
+
             </TabItem>
         </TabControl>
 
