@@ -83,6 +83,11 @@ namespace Core
 	    {
 		    return _volanieFunkcii.DajInformacieOVlakoch(idVlaku, nazovTypuVlaku);
 	    }
+
+	    public DataSet VypisHistoriuVyskytuVozna(int idVozna)
+	    {
+		    return _volanieFunkcii.DajHistoriuVyskytuVozna(idVozna);
+	    }
 		// vypisy koniec
 
 		public void PresunVozen(int idVozna, int idKolajZ, int idKolajNa)

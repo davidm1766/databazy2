@@ -164,12 +164,14 @@
                             <ColumnDefinition/>
                             <ColumnDefinition/>
                             <ColumnDefinition/>
+                            <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
 
                         <Button Grid.Column="0" Click="VypisInformacieOVoznochButton_OnClick">Vypis informacie o voznoch</Button>
-                        <Button Grid.Column="1" Click="VypisInformacieOVlakochButton_OnClick">Vypis informacie o vlakoch</Button>
-                        <Button Grid.Column="2" Click="VypisVozneVStanici_OnClick">Vypis vozne v stanici</Button>
-                        <Button Grid.Column="3" Click="VypisVozneVoVlakuButton_OnClick">Vypis vozne vo vlaku</Button>
+                        <Button Grid.Column="1" Click="VypisHistoriuVyskytuVoznaButton_OnClick">Vypis historiu vyskytu vozna</Button>
+                        <Button Grid.Column="2" Click="VypisInformacieOVlakochButton_OnClick">Vypis informacie o vlakoch</Button>
+                        <Button Grid.Column="3" Click="VypisVozneVStanici_OnClick">Vypis vozne v stanici</Button>
+                        <Button Grid.Column="4" Click="VypisVozneVoVlakuButton_OnClick">Vypis vozne vo vlaku</Button>
                     </Grid>
                 </Grid>
             </TabItem>

@@ -191,6 +191,12 @@ namespace GUI
 		    form.ShowDialog();
 	    }
 
+	    private void VypisHistoriuVyskytuVoznaButton_OnClick(object sender, RoutedEventArgs e)
+	    {
+		    var form = new VypisHistoriuVyskytuVoznaForm(Vypis);
+		    form.ShowDialog();
+	    }
+
 		private void Vypis(DataSet dataSet)
 	    {
 			ReportDataGrid.ItemsSource = dataSet.Tables[0].DefaultView;

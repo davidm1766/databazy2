@@ -574,6 +574,23 @@ namespace DataLayer
 		    return DajDataSet(cmd);
 		}
 
+	    public DataSet DajHistoriuVyskytuVozna(int idVozna)
+	    {
+		    var cmd = new OracleCommand()
+		    {
+			    Connection = _connection,
+			    CommandText = "vypis_historiu_vyskytu_vozna",
+			    CommandType = CommandType.StoredProcedure,
+			    BindByName = true
+
+		    };
+		    
+		    cmd.Parameters.Add("pa_id_vozna", OracleDbType.Int32, ParameterDirection.Input).Value = idVozna;		   		    
+		    cmd.Parameters.Add("result", OracleDbType.RefCursor).Direction = ParameterDirection.ReturnValue;
+
+		    return DajDataSet(cmd);
+	    }
+
 		private DataSet DajDataSet(OracleCommand cmd)
 	    {
 			try
