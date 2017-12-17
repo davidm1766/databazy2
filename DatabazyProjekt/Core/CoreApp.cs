@@ -153,5 +153,18 @@ namespace Core
 
             _volanieFunkcii.VlozZamestnanca(zamestnanecNew.Meno, zamestnanecNew.Priezvisko, nazovSuboru);
         }
+
+      
+        public Vozen NajdiNajblizsiVolnyVozen(Vlastnik vlastnik, TypVozna typvozna, double latit, double longi)
+        {
+            Vozen v = new Vozen();
+
+            var ret = _volanieFunkcii.NajdiNajblizsiVolnyVozen(vlastnik.IdVlastnika, typvozna.IdTypuVozna, latit, longi);
+
+            v.TypVozna = typvozna;
+            v.VlastnikVozna = vlastnik;
+            v.AktualnaPoloha = new Poloha() {IdPoloha=ret.Item1, AktualnaPolohaLatitude=ret.Item2,AktualnaPolohaLongitude=ret.Item3 };
+            return v;
+        }
     }
 }

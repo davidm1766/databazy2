@@ -9,6 +9,21 @@ namespace Core.Models
 {
     public class Vozen
     {
+        private int _idVozna;
+        public int IDVozna
+        {
+            get => _idVozna;
+            set
+            {
+                if (value != _idVozna)
+                {
+                    _idVozna = value;
+                    OnPropertyChanged("IDVozna");
+                }
+            }
+        }
+
+
         private Vlastnik _vlastnikVozna;
         public Vlastnik VlastnikVozna
         {

@@ -44,5 +44,13 @@ namespace GUI
                 MessageBox.Show(ex.Message);
             }
         }
+
+        private void PasswordBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == System.Windows.Input.Key.Enter)
+            {
+                Button_Click(this, new RoutedEventArgs());
+            }
+        }
     }
 }

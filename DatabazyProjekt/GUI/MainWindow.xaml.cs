@@ -233,5 +233,24 @@ namespace GUI
                 MessageBox.Show(ex.Message);
             }
         }
+
+        private void Button_Click_9(object sender, RoutedEventArgs e)
+        {
+            //najdi najblizsi volny vozen
+            try
+            {
+                Vlastnik v = (Vlastnik)CMBVlastnikNajdi.SelectedItem;
+                TypVozna tv = (TypVozna)CMBTypVoznaNajdi.SelectedItem;
+                var latit = double.Parse(TXTLatitNajdi.Text);
+                var longi = double.Parse(TXTLongNajdi.Text);
+                Vozen voz = CoreApp.Instance.NajdiNajblizsiVolnyVozen(v,tv,latit,longi);
+                MessageBox.Show($"{voz.IDVozna} {voz.TypVozna.NazovTypuVozna} {voz.VlastnikVozna.NazovVlastnika} " +
+                                $"{voz.AktualnaPoloha.AktualnaPolohaLatitude}-{voz.AktualnaPoloha.AktualnaPolohaLongitude}");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
     }
 }

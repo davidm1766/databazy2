@@ -20,7 +20,7 @@
         <Label Grid.Column="0" Grid.Row="1" Content="Heslo"/>
 
         <TextBox Name="TXTMeno" Margin="5" Grid.Column="1" Grid.Row="0"/>
-        <PasswordBox Name="PasswordBox" Margin="5" Grid.Column="1" Grid.Row="1"/>
+        <PasswordBox Name="PasswordBox" Margin="5" Grid.Column="1" Grid.Row="1" KeyDown="PasswordBox_KeyDown"/>
 
         <Button Margin="5" Grid.Column="1" Grid.Row="3" Click="Button_Click">Login</Button>
     </Grid>

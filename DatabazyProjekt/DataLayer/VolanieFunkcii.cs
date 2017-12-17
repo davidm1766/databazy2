@@ -179,6 +179,49 @@ namespace DataLayer
             }
 
         }
+        /// <summary>
+        ///     ID
+        ///     lati
+        ///     longi
+        /// </summary>
+        /// <param name="idVlastnika"></param>
+        /// <param name="idTypuVozna"></param>
+        /// <param name="latit"></param>
+        /// <param name="longi"></param>
+        /// <returns></returns>
+        public Tuple<int, double, double> NajdiNajblizsiVolnyVozen(int idVlastnika, int idTypuVozna, double latit, double longi)
+        {
+            var cmd = new OracleCommand
+            {
+                Connection = _connection,
+                CommandText = "gui_najdi_najblizsi_vozen",
+                CommandType = CommandType.StoredProcedure,
+                BindByName = true
+            };
+
+            cmd.Parameters.Add("pa_id_vlastnika", OracleDbType.Int32, ParameterDirection.Input).Value = idVlastnika;
+            cmd.Parameters.Add("pa_id_typu_vozna", OracleDbType.Int32, ParameterDirection.Input).Value = idTypuVozna;
+            cmd.Parameters.Add("pa_latitude", OracleDbType.Decimal, ParameterDirection.Input).Value = (decimal)latit;
+            cmd.Parameters.Add("pa_longitude", OracleDbType.Decimal, ParameterDirection.Input).Value = (decimal)longi;
+
+            cmd.Parameters.Add("out_id", OracleDbType.Int32, ParameterDirection.Output);
+            cmd.Parameters.Add("out_longitude", OracleDbType.Decimal, ParameterDirection.Output);
+            cmd.Parameters.Add("out_latitude", OracleDbType.Decimal, ParameterDirection.Output);
+            
+            try
+            {
+                _connection.Open();
+                cmd.ExecuteNonQuery();
+                var id = (int)(OracleDecimal)cmd.Parameters["out_id"].Value;
+                var la = (decimal)(OracleDecimal)cmd.Parameters["out_latitude"].Value;
+                var lo = (decimal)(OracleDecimal)cmd.Parameters["out_longitude"].Value;
+                return new Tuple<int, double, double>(id, (double)la, (double)lo);
+            }
+            finally
+            {
+                _connection.Close();
+            }
+        }
 
         public Tuple<string,string,byte[]> NajdiZamestnanca(int idZamestnanca)
         {

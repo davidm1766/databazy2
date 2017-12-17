@@ -18,6 +18,10 @@
                         <RowDefinition Height="1*"/>
                         <RowDefinition Height="1*"/>
                         <RowDefinition Height="1*"/>
+
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="153*"/>
@@ -44,9 +48,28 @@
                     <TextBox Margin="5" Grid.Row="3" Grid.Column="1" Text="{Binding Vozen.AktualnaPoloha.AktualnaPolohaLongitude}"></TextBox>
 
                     <Button Margin="5" Grid.Row="4" Grid.Column="1" Click="Button_Click" >Pridaj vozeň</Button>
-                    
-              
 
+
+                    <Label Grid.Row="5" Grid.Column="0">
+                        Vlastnik
+                    </Label>
+
+                    <Label Grid.Row="6" Grid.Column="0">
+                        Typ vozňa
+                    </Label>
+
+                    <Label Grid.Row="7" Grid.Column="0">
+                        Aktuálna poloha Latitude
+                    </Label>
+                    <Label Grid.Row="8" Grid.Column="0">
+                        Aktuálna poloha Longitude
+                    </Label>
+                    <ComboBox Name="CMBVlastnikNajdi" ItemsSource="{Binding Vlastnici, Mode=TwoWay}" DisplayMemberPath="NazovVlastnika" Margin="5"  Grid.Row="5" Grid.Column="1" />
+                    <ComboBox Name="CMBTypVoznaNajdi" ItemsSource="{Binding TypyVoznov, Mode=TwoWay}" DisplayMemberPath="NazovTypuVozna" Margin="5" Grid.Row="6" Grid.Column="1" />
+                    <TextBox Name="TXTLatitNajdi" Margin="5" Grid.Row="7" Grid.Column="1"/>
+                    <TextBox Name="TXTLongNajdi" Margin="5" Grid.Row="8" Grid.Column="1"/>
+
+                    <Button Margin="5" Grid.Row="9" Grid.Column="1" Click="Button_Click_9">Vyhľadaj najbližší voľný</Button>
                 </Grid>
             </TabItem>
             <TabItem Header="Vozen vyradanie/zaradenie">
