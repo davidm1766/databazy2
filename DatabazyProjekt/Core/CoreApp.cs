@@ -68,6 +68,12 @@ namespace Core
 		    return _volanieFunkcii.DajPolohuVoznov(nazovVlastnika, nazovTypu);
 	    }
 
+	    public DataSet VypisAktualnuPolohuVozna(int idVozna)
+	    {
+		    return _volanieFunkcii.DajPolohuVozna(idVozna);
+	    }
+		// vypisy koniec
+
         public void PresunVozen(int idVozna, int idKolajZ, int idKolajNa)
         {
             _volanieFunkcii.PresunVozen(idVozna, idKolajZ, idKolajNa);

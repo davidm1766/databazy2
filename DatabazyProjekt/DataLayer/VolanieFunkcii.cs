@@ -351,32 +351,23 @@ namespace DataLayer
             }
         }
 
-	    public void DajPolohuVozna(int idVozna, out double zemDlzka, out double zemSirka)
+		// vypisy
+
+	    public DataSet DajPolohuVozna(int idVozna)
 	    {
 			var cmd = new OracleCommand
 			{
 				Connection = _connection,
-				CommandText = "daj_polohu_vozna",
+				CommandText = "vypis_aktualnu_polohu_vozna",
 				CommandType = CommandType.StoredProcedure,
 				BindByName = true
 			};
 
 		    cmd.Parameters.Add("pa_id_vozna", OracleDbType.Int32, ParameterDirection.Input).Value = idVozna;
-		    cmd.Parameters.Add("pa_zem_sirka", OracleDbType.Decimal, ParameterDirection.Output);
-		    cmd.Parameters.Add("pa_zem_dlzka", OracleDbType.Decimal, ParameterDirection.Output);
+		    cmd.Parameters.Add("result", OracleDbType.RefCursor).Direction = ParameterDirection.ReturnValue;
 
-		    try
-		    {
-				_connection.Open();   							    
-			    cmd.ExecuteNonQuery();
-			    zemDlzka = (double) (OracleDecimal) cmd.Parameters["pa_zem_dlzka"].Value;
-			    zemSirka = (double) (OracleDecimal) cmd.Parameters["pa_zem_sirka"].Value;				
-		    }
-		    finally
-		    {
-			    _connection.Close();
-		    }
-		}
+		    return DajDataSet(cmd);
+	    }
 
 	    public DataSet DajPolohuVoznov(string nazovVlastnika, string nazovTypu)
 	    {
@@ -393,19 +384,26 @@ namespace DataLayer
 		    cmd.Parameters.Add("pa_nazov_vlastnika", OracleDbType.Varchar2, ParameterDirection.Input).Value = nazovVlastnika;
 			cmd.Parameters.Add("result", OracleDbType.RefCursor).Direction = ParameterDirection.ReturnValue;
 
-		    try
-		    {
-			    _connection.Open();
+		    return DajDataSet(cmd);
+	    }
+
+	    private DataSet DajDataSet(OracleCommand cmd)
+	    {
+			try
+			{
+				_connection.Open();
 				var dataSet = new DataSet();
 				var oracleDataAdapter = new OracleDataAdapter(cmd);
-			    oracleDataAdapter.Fill(dataSet);
-			    return dataSet;
-		    }
-		    finally
-		    {
-			    _connection.Close();
-		    }
-	    }
+				oracleDataAdapter.Fill(dataSet);
+				return dataSet;
+			}
+			finally
+			{
+				_connection.Close();
+			}
+		}
+
+		// vypisy koniec
 
 	}
 }
