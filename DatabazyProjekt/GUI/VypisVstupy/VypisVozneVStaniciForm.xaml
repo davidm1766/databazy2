@@ -1,0 +1,42 @@
+﻿<Window x:Class="GUI.VypisVstupy.VypisVozneVStaniciForm"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:GUI.VypisVstupy"
+        mc:Ignorable="d"
+        Title="VypisVozneVStaniciForm" Height="300" Width="300">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <Label Grid.Row="0" Grid.Column="0" Margin="5">Stanica:</Label>
+        <Label Grid.Row="1" Grid.Column="0" Margin="5">Od:</Label>
+        <Label Grid.Row="2" Grid.Column="0" Margin="5">Do:</Label>
+        <Label Grid.Row="3" Grid.Column="0" Margin="5">Typ vozna:</Label>
+        <Label Grid.Row="4" Grid.Column="0" Margin="5">Vlastnik:</Label>
+        
+        <ComboBox Grid.Row="0" Grid.Column="1" Margin="5" ItemsSource="{Binding Stanice, Mode=TwoWay}" 
+                  SelectedItem="{Binding Stanica, Mode=TwoWay}" DisplayMemberPath="Nazov"></ComboBox>
+        <DatePicker Grid.Row="1" Grid.Column="1" Margin="5" SelectedDate="{Binding Od, Mode=TwoWay}"></DatePicker>
+        <DatePicker Grid.Row="2" Grid.Column="1" Margin="5" SelectedDate="{Binding Do, Mode=TwoWay}"></DatePicker>
+        <ComboBox Grid.Row="3" Grid.Column="1" Margin="5" ItemsSource="{Binding TypyVoznov, Mode=TwoWay}" 
+                  SelectedItem="{Binding TypVozna, Mode=TwoWay}" DisplayMemberPath="NazovTypuVozna"></ComboBox>
+        <ComboBox Grid.Row="4" Grid.Column="1" Margin="5" ItemsSource="{Binding Vlastnici, Mode=TwoWay}" 
+                  SelectedItem="{Binding Vlastnik, Mode=TwoWay}" DisplayMemberPath="NazovVlastnika"></ComboBox>
+        
+        <Button Grid.Row="5" Grid.Column="0" Margin="5" Click="OKButton_OnClick">OK</Button>
+        <Button Grid.Row="5" Grid.Column="1" Margin="5" Click="ZrusButton_OnClick">Zruš</Button>
+        
+    </Grid>
+</Window>
