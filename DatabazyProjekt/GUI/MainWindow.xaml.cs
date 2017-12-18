@@ -167,9 +167,9 @@ namespace GUI
     
 
 		// vypisy
-	    private void VypisPolohuVoznovButton_OnClick(object sender, RoutedEventArgs e)
+	    private void VypisInformacieOVoznochButton_OnClick(object sender, RoutedEventArgs e)
 	    {
-		    var form = new VypisAktualnuPolohuVoznov(Vypis, Vlastnici, TypyVoznov);
+		    var form = new VypisInformacieOVoznochForm(Vypis, Vlastnici, TypyVoznov, Stanice);
 		    form.ShowDialog();
 	    }
 
@@ -182,6 +182,18 @@ namespace GUI
 	    private void VypisVozneVoVlakuButton_OnClick(object sender, RoutedEventArgs e)
 	    {
 		    var form = new VypisVozneVoVlakuForm(Vypis, TypyVlakov, TypyVoznov, Vlastnici);
+		    form.ShowDialog();
+	    }
+
+	    private void VypisInformacieOVlakochButton_OnClick(object sender, RoutedEventArgs e)
+	    {
+		    var form = new VypisInformacieOVlakoch(Vypis, TypyVlakov);
+		    form.ShowDialog();
+	    }
+
+	    private void VypisHistoriuVyskytuVoznaButton_OnClick(object sender, RoutedEventArgs e)
+	    {
+		    var form = new VypisHistoriuVyskytuVoznaForm(Vypis);
 		    form.ShowDialog();
 	    }
 

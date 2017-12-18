@@ -54,8 +54,14 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="VypisVstupy\VypisAktualnuPolohuVoznov.xaml.cs">
-      <DependentUpon>VypisAktualnuPolohuVoznov.xaml</DependentUpon>
+    <Compile Include="VypisVstupy\VypisHistoriuVyskytuVoznaForm.xaml.cs">
+      <DependentUpon>VypisHistoriuVyskytuVoznaForm.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="VypisVstupy\VypisInformacieOVlakoch.xaml.cs">
+      <DependentUpon>VypisInformacieOVlakoch.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="VypisVstupy\VypisInformacieOVoznochForm.xaml.cs">
+      <DependentUpon>VypisInformacieOVoznochForm.xaml</DependentUpon>
     </Compile>
     <Compile Include="VypisVstupy\VypisVozneVoVlakuForm.xaml.cs">
       <DependentUpon>VypisVozneVoVlakuForm.xaml</DependentUpon>
@@ -82,7 +88,15 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="VypisVstupy\VypisAktualnuPolohuVoznov.xaml">
+    <Page Include="VypisVstupy\VypisHistoriuVyskytuVoznaForm.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="VypisVstupy\VypisInformacieOVlakoch.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="VypisVstupy\VypisInformacieOVoznochForm.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

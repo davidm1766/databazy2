@@ -62,15 +62,11 @@ namespace Core
             _volanieFunkcii.VyradVozenZVlaku(idVozna);
         }
 
-		// vypisy
-	    public DataSet VypisAktualnuPolohuVoznov(string nazovVlastnika, string nazovTypu)
-	    {
-		    return _volanieFunkcii.DajPolohuVoznov(nazovVlastnika, nazovTypu);
-	    }
+		// vypisy	    
 
-	    public DataSet VypisAktualnuPolohuVozna(int idVozna)
+	    public DataSet VypisInformacieOVoznoch(int idVozna, string nazovVlastnika, string nazovTypuVozna, string nazovStanice, bool? vyradene)
 	    {
-		    return _volanieFunkcii.DajPolohuVozna(idVozna);
+		    return _volanieFunkcii.DajInformacieOVoznoch(idVozna, nazovVlastnika, nazovTypuVozna, nazovStanice, vyradene);
 	    }
 
 	    public DataSet VypisVozneVStanici(string nazovStanice, DateTime casOd, DateTime casDo, string nazovVlastnika, string nazovTypuVozna)
@@ -81,6 +77,16 @@ namespace Core
 	    public DataSet VypisVozneVoVlaku(int idVlaku, string nazovTypuVlaku, string nazovTypuVozna, string nazovVlastnika, DateTime casOd, DateTime casDo)
 	    {
 		    return _volanieFunkcii.DajVozneVoVlaku(idVlaku, nazovTypuVlaku, nazovTypuVozna, nazovVlastnika, casOd, casDo);
+	    }
+
+	    public DataSet VypisInformacieOVlakoch(int idVlaku, string nazovTypuVlaku)
+	    {
+		    return _volanieFunkcii.DajInformacieOVlakoch(idVlaku, nazovTypuVlaku);
+	    }
+
+	    public DataSet VypisHistoriuVyskytuVozna(int idVozna)
+	    {
+		    return _volanieFunkcii.DajHistoriuVyskytuVozna(idVozna);
 	    }
 		// vypisy koniec
 

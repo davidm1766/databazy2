@@ -21,45 +21,57 @@ namespace GUI.VypisVstupy
 	/// <summary>
 	/// Interaction logic for VypisAktualnuPolohuVoznov.xaml
 	/// </summary>
-	public partial class VypisAktualnuPolohuVoznov : Window
+	public partial class VypisInformacieOVoznochForm : Window
 	{
 		public ObservableCollection<Vlastnik> Vlastnici { get; set; }
 		public ObservableCollection<TypVozna> TypyVoznov { get; set; }
+		public ObservableCollection<Stanica> Stanice { get; set; }
 
 		public string IdVozna { get; set; }
 		public Vlastnik VlastnikVozna { get; set; }
 		public TypVozna TypVozna { get; set; }
+		public Stanica Stanica { get; set; }
+		public bool Vyradene { get; set; }
+		public bool Nevyradene { get; set; }
+		public bool VyradeneNevyradene { get; set; } = true;
 
-		private Action<DataSet> _vypisAction; 
+		private readonly Action<DataSet> _vypisAction; 
 
-		public VypisAktualnuPolohuVoznov(Action<DataSet> vypisAction, Collection<Vlastnik> vlastnici, Collection<TypVozna> typyVozna)
+		public VypisInformacieOVoznochForm(Action<DataSet> vypisAction, ObservableCollection<Vlastnik> vlastnici, 
+			ObservableCollection<TypVozna> typyVozna, ObservableCollection<Stanica> stanice)
 		{
-			Vlastnici = new ObservableCollection<Vlastnik>(vlastnici);
-			TypyVoznov = new ObservableCollection<TypVozna>(typyVozna);
+			Vlastnici = vlastnici;
+			TypyVoznov = typyVozna;
+			Stanice = stanice;
 			_vypisAction = vypisAction;
 			InitializeComponent();
 			DataContext = this;
 		}
 
 		private void OKButton_OnClick(object sender, RoutedEventArgs e)
-		{
-			DataSet dataSet;
+		{			
+			int idVozna = -1;
 
-			if (string.IsNullOrWhiteSpace(IdVozna))
+			if (!string.IsNullOrWhiteSpace(IdVozna) && !int.TryParse(IdVozna, out idVozna))
 			{
-				// ak id vozna nie je vyplnene
-				dataSet = CoreApp.Instance.VypisAktualnuPolohuVoznov(VlastnikVozna?.NazovVlastnika, TypVozna?.NazovTypuVozna);
-			}
-			else if (int.TryParse(IdVozna, out var id))
-			{
-				// ak formular obsahuje validne id vozna
-				dataSet = CoreApp.Instance.VypisAktualnuPolohuVozna(id);
-			}
-			else
-			{
-				MessageBox.Show("Id vozňa musí byť celé číslo.", "Chyba", MessageBoxButton.OK, MessageBoxImage.Error);
+				MessageBox.Show("Id vozna musí byť celé číslo.", "Chyba", MessageBoxButton.OK, MessageBoxImage.Error);
 				return;
 			}
+
+			bool? vyradene = null;
+
+			if (Vyradene)
+			{
+				vyradene = true;
+			}
+
+			if (Nevyradene)
+			{
+				vyradene = false;
+			}
+
+			DataSet dataSet =
+				CoreApp.Instance.VypisInformacieOVoznoch(idVozna, VlastnikVozna?.NazovVlastnika, TypVozna?.NazovTypuVozna, Stanica?.Nazov, vyradene);	
 
 			_vypisAction(dataSet);
 			DialogResult = true;

@@ -1,0 +1,48 @@
+﻿<Window x:Class="GUI.VypisVstupy.VypisInformacieOVoznochForm"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:GUI.VypisVstupy"
+        mc:Ignorable="d"
+        Title="Vypis informacie o voznoch" Height="300" Width="300">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        
+        <Label Grid.Row="0" Grid.Column="0">ID vozna:</Label>
+        <Label Grid.Row="1" Grid.Column="0">Vlastnik:</Label>
+        <Label Grid.Row="2" Grid.Column="0">Typ vozna:</Label>
+        <Label Grid.Row="3" Grid.Column="0">Aktualna stanica:</Label>
+        <Label Grid.Row="4" Grid.Column="0">Vyradene:</Label>
+        <Label Grid.Row="5" Grid.Column="0">Nevyradene:</Label>
+        <Label Grid.Row="6" Grid.Column="0">Vyradene a nevyradene:</Label>
+        
+        <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding IdVozna, Mode=TwoWay}"></TextBox>
+        <ComboBox ItemsSource="{Binding Vlastnici, Mode=TwoWay}" DisplayMemberPath="NazovVlastnika" 
+                  SelectedItem="{Binding VlastnikVozna}" Grid.Row="1" Grid.Column="1" />
+        <ComboBox ItemsSource="{Binding TypyVoznov, Mode=TwoWay}" DisplayMemberPath="NazovTypuVozna" 
+                  SelectedItem="{Binding TypVozna}" Grid.Row="2" Grid.Column="1" />
+        <ComboBox ItemsSource="{Binding Stanice, Mode=TwoWay}" DisplayMemberPath="Nazov" 
+                  SelectedItem="{Binding Stanica}" Grid.Row="3" Grid.Column="1" />
+        <RadioButton GroupName="GrVyradene" Grid.Row="4" Grid.Column="1" IsChecked="{Binding Vyradene, Mode=TwoWay}"></RadioButton>
+        <RadioButton GroupName="GrVyradene" Grid.Row="5" Grid.Column="1" IsChecked="{Binding Nevyradene, Mode=TwoWay}"></RadioButton>
+        <RadioButton GroupName="GrVyradene" Grid.Row="6" Grid.Column="1" IsChecked="{Binding VyradeneNevyradene, Mode=TwoWay}"></RadioButton>
+        
+        <Button Grid.Column="0" Grid.Row="7" Click="OKButton_OnClick">OK</Button>
+        <Button Grid.Column="1" Grid.Row="7" Click="CancelButton_OnClick">Zrušiť</Button>
+    </Grid>
+</Window>

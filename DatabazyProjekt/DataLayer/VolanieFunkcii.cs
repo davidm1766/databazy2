@@ -458,36 +458,51 @@ namespace DataLayer
 
 		// vypisy
 
-	    public DataSet DajPolohuVozna(int idVozna)
+	    public DataSet DajInformacieOVoznoch(int idVozna, string nazovVlastnika, string nazovTypuVozna, string nazovStanice, bool? vyradene)
 	    {
 			var cmd = new OracleCommand
 			{
 				Connection = _connection,
-				CommandText = "vypis_aktualnu_polohu_vozna",
+				CommandText = "vypis_informacie_o_voznoch",
 				CommandType = CommandType.StoredProcedure,
 				BindByName = true
 			};
 
-		    cmd.Parameters.Add("pa_id_vozna", OracleDbType.Int32, ParameterDirection.Input).Value = idVozna;
-		    cmd.Parameters.Add("result", OracleDbType.RefCursor).Direction = ParameterDirection.ReturnValue;
+		    if (idVozna > 0)
+		    {
+			    cmd.Parameters.Add("pa_id_vozna", OracleDbType.Int32, ParameterDirection.Input).Value = idVozna;
+			}
+
+		    if (vyradene != null)
+		    {
+			    cmd.Parameters.Add("pa_odstaveny", OracleDbType.Char, ParameterDirection.Input).Value = (vyradene == true ? 'y' : 'n');
+			}
+		    
+			cmd.Parameters.Add("pa_nazov_vlastnika", OracleDbType.Varchar2, ParameterDirection.Input).Value = nazovVlastnika;
+		    cmd.Parameters.Add("pa_nazov_typu_vozna", OracleDbType.Varchar2, ParameterDirection.Input).Value = nazovTypuVozna;
+		    cmd.Parameters.Add("pa_nazov_stanice", OracleDbType.Varchar2, ParameterDirection.Input).Value = nazovStanice;
+			cmd.Parameters.Add("result", OracleDbType.RefCursor).Direction = ParameterDirection.ReturnValue;
 
 		    return DajDataSet(cmd);
 	    }
 
-	    public DataSet DajPolohuVoznov(string nazovVlastnika, string nazovTypu)
+	    public DataSet DajInformacieOVlakoch(int idVlaku, string typVlaku)
 	    {
-		    var cmd = new OracleCommand()
+		    var cmd = new OracleCommand
 		    {
 			    Connection = _connection,
-			    CommandText = "vypis_aktualnu_polohu_voznov",
+			    CommandText = "vypis_informacie_o_vlakoch",
 			    CommandType = CommandType.StoredProcedure,
 			    BindByName = true
-
 		    };
 
-		    cmd.Parameters.Add("pa_nazov_typu_vozna", OracleDbType.Varchar2, ParameterDirection.Input).Value = nazovTypu;
-		    cmd.Parameters.Add("pa_nazov_vlastnika", OracleDbType.Varchar2, ParameterDirection.Input).Value = nazovVlastnika;
-			cmd.Parameters.Add("result", OracleDbType.RefCursor).Direction = ParameterDirection.ReturnValue;
+		    if (idVlaku > 0)
+		    {
+			    cmd.Parameters.Add("pa_id_vlaku", OracleDbType.Int32, ParameterDirection.Input).Value = idVlaku;
+		    }		    
+
+		    cmd.Parameters.Add("pa_nazov_typu", OracleDbType.Varchar2, ParameterDirection.Input).Value = typVlaku;		    
+		    cmd.Parameters.Add("result", OracleDbType.RefCursor).Direction = ParameterDirection.ReturnValue;
 
 		    return DajDataSet(cmd);
 	    }
@@ -558,6 +573,23 @@ namespace DataLayer
 
 		    return DajDataSet(cmd);
 		}
+
+	    public DataSet DajHistoriuVyskytuVozna(int idVozna)
+	    {
+		    var cmd = new OracleCommand()
+		    {
+			    Connection = _connection,
+			    CommandText = "vypis_historiu_vyskytu_vozna",
+			    CommandType = CommandType.StoredProcedure,
+			    BindByName = true
+
+		    };
+		    
+		    cmd.Parameters.Add("pa_id_vozna", OracleDbType.Int32, ParameterDirection.Input).Value = idVozna;		   		    
+		    cmd.Parameters.Add("result", OracleDbType.RefCursor).Direction = ParameterDirection.ReturnValue;
+
+		    return DajDataSet(cmd);
+	    }
 
 		private DataSet DajDataSet(OracleCommand cmd)
 	    {
