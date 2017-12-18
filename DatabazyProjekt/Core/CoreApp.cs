@@ -191,9 +191,10 @@ namespace Core
 
             var ret = _volanieFunkcii.NajdiNajblizsiVolnyVozen(vlastnik.IdVlastnika, typvozna.IdTypuVozna, latit, longi);
 
+            v.IDVozna = ret.Item1;
             v.TypVozna = typvozna;
             v.VlastnikVozna = vlastnik;
-            v.AktualnaPoloha = new Poloha() {IdPoloha=ret.Item1, AktualnaPolohaLatitude=ret.Item2,AktualnaPolohaLongitude=ret.Item3 };
+            v.AktualnaPoloha = new Poloha() {AktualnaPolohaLatitude=ret.Item2,AktualnaPolohaLongitude=ret.Item3 };
             return v;
         }
     }
