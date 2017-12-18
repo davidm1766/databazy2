@@ -208,5 +208,10 @@ namespace Core
         {
             return _volanieFunkcii.VypisStatistikyOZamestnancoch();
         }
+
+        public string SimulatorVlaku(int idvlaku)
+        {
+            return _volanieFunkcii.SimulatorVlaku(idvlaku);
+        }
     }
 }

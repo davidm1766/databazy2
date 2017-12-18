@@ -258,16 +258,49 @@ namespace DataLayer
             return DajDataSet(cmd);
         }
 
+        public string SimulatorVlaku(int idvlaku)
+        {
+
+            OracleDataReader oraReader = null;
+            try
+            {
+                _connection.Open();
+
+                var sql = $"select s.nazov from stanica s " +
+                    $"where s.poloha in ( select deref(v.vozen).aktual_poloha " +
+                    $"from vozen_vlak v where deref(v.vlak).id_vlak = {idvlaku} and cas_do is null) ";
+
+
+                OracleCommand oraCommand = new OracleCommand(sql, _connection);
+
+                oraReader = oraCommand.ExecuteReader();
+
+                if (oraReader.HasRows)
+                {
+                    while (oraReader.Read())
+                    { 
+                        return oraReader.GetString(0);
+                    }
+                }
+                return "";
+            }
+            finally
+            {
+                oraReader?.Close();
+                _connection.Close();
+            }
+            
+        }
+
+
+
+
+
         /// <summary>
         ///     ID
         ///     lati
         ///     longi
         /// </summary>
-        /// <param name="idVlastnika"></param>
-        /// <param name="idTypuVozna"></param>
-        /// <param name="latit"></param>
-        /// <param name="longi"></param>
-        /// <returns></returns>
         public Tuple<int, double, double> NajdiNajblizsiVolnyVozen(int idVlastnika, int idTypuVozna, double latit, double longi)
         {
             var cmd = new OracleCommand

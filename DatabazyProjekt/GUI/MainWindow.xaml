@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GUI"
         mc:Ignorable="d"
-        Title="MainWindow" Height="438.703" Width="808.996">
+        Title="MainWindow" Height="449.703" Width="903.996">
     <Grid>
         <TabControl Grid.Column="0" Grid.Row="0">
             <TabItem Header="Pridanie vozňa">
@@ -246,6 +246,34 @@
                     <DataGrid Grid.Row="0" Grid.ColumnSpan="2" Name="ReportDataGridZamestnanec"/>
                     <Button Margin="5" Grid.Column="1" Grid.Row="1" Click="Button_Click_10">Vypíš štatistiky</Button>
 
+                </Grid>
+            </TabItem>
+            <TabItem Header="Simulator">
+                <Grid>
+                    <Grid.RowDefinitions>
+
+                        <RowDefinition Height="0.4*"/>
+                        <RowDefinition Height="0.4*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Orientation="Horizontal" Grid.Column="0" Grid.Row="0">
+                        <Label>ID vlaku</Label>
+                        <TextBox Name="TXTIDVlakuSim" Margin="5" Width="377" ></TextBox>
+                    </StackPanel>
+
+                    <StackPanel Orientation="Horizontal" Grid.Column="0" Grid.Row="1">
+                        <Label>Aktuálna poloha vlaku</Label>
+                        <TextBlock Name="TXTAktuPoloha" Margin="5" Width="364" />
+                    </StackPanel>
+                    
+                    <Button Margin="5" Grid.Column="1" Grid.Row="0" Click="Button_Click_11" >Sleduj vlak</Button>
+                    <Button Margin="5" Grid.Column="1" Grid.Row="1" Click="Button_Click_12">Stop</Button>
                 </Grid>
             </TabItem>
         </TabControl>

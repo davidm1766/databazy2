@@ -9,6 +9,7 @@ using System.IO;
 using System.Windows;
 using System.Windows.Media.Imaging;
 using GUI.VypisVstupy;
+using System.Threading;
 
 namespace GUI
 {
@@ -311,5 +312,46 @@ namespace GUI
                 MessageBox.Show(ex.Message);
             }
         }
+        // public delegate void ThreadStart(object param);
+        private bool _runSim = true;
+        private void Button_Click_11(object sender, RoutedEventArgs e)
+        {
+            //aktualna poloha vlaku
+            try
+            {
+                int id = int.Parse(TXTIDVlakuSim.Text);
+
+                Thread t = new Thread(new ThreadStart(() =>
+                {
+                    try
+                    {
+                        while (_runSim)
+                        {
+                            string stanica = CoreApp.Instance.SimulatorVlaku(id);
+
+                            Application.Current.Dispatcher.Invoke(() =>
+                            {
+                                TXTAktuPoloha.Text = stanica;
+                            });
+                            Thread.Sleep(1000);
+                        }
+                    }
+                    catch (Exception ex) {
+                        Console.WriteLine(ex.Message);
+                    }
+                }
+                ));
+                                
+                t.Start();
+            } catch(Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+        }
+
+        private void Button_Click_12(object sender, RoutedEventArgs e)
+        {
+            _runSim = false;
+    }
     }
 }

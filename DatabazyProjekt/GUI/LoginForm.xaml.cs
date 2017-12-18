@@ -26,7 +26,6 @@ namespace GUI
         public LoginForm()
         {
             InitializeComponent();
-            Button_Click(null, null);
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
