@@ -241,6 +241,23 @@ namespace DataLayer
             }
 
         }
+
+        public DataSet VypisStatistikyOZamestnancoch()
+        {
+            var cmd = new OracleCommand()
+            {
+                Connection = _connection,
+                CommandText = "vypis_statistiky_zamestanci",
+                CommandType = CommandType.StoredProcedure,
+                BindByName = true
+
+            };
+
+            cmd.Parameters.Add("result", OracleDbType.RefCursor).Direction = ParameterDirection.ReturnValue;
+
+            return DajDataSet(cmd);
+        }
+
         /// <summary>
         ///     ID
         ///     lati

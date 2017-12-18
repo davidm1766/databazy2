@@ -298,5 +298,18 @@ namespace GUI
                 MessageBox.Show(ex.Message);
             }
         }
+
+        private void Button_Click_10(object sender, RoutedEventArgs e)
+        {
+            //vypisanie statistik o zamestnanovc
+            try {
+                DataSet dataSet = CoreApp.Instance.VypisStatistikyOZamestnancoch();
+                ReportDataGridZamestnanec.ItemsSource = dataSet.Tables[0].DefaultView; 
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
     }
 }

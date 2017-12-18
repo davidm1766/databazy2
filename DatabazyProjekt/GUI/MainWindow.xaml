@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GUI"
         mc:Ignorable="d"
-        Title="MainWindow" Height="437.703" Width="766.996">
+        Title="MainWindow" Height="438.703" Width="808.996">
     <Grid>
         <TabControl Grid.Column="0" Grid.Row="0">
             <TabItem Header="Pridanie vozňa">
@@ -39,9 +39,9 @@
                         Aktuálna poloha Latitude
                     </Label>
                     <Label Grid.Row="3" Grid.Column="0">
-                        Aktuálna poloha Longitude 
+                        Aktuálna poloha Longitude
                     </Label>
-                    
+
                     <ComboBox Name="CMBVlastnik" ItemsSource="{Binding Vlastnici, Mode=TwoWay}" DisplayMemberPath="NazovVlastnika" SelectedItem="{Binding Vozen.VlastnikVozna}" Margin="5"  Grid.Row="0" Grid.Column="1" />
                     <ComboBox Name="CMBTypVozna" ItemsSource="{Binding TypyVoznov, Mode=TwoWay}" DisplayMemberPath="NazovTypuVozna" SelectedItem="{Binding Vozen.TypVozna}" Margin="5" Grid.Row="1" Grid.Column="1" />
                     <TextBox Margin="5" Grid.Row="2" Grid.Column="1" Text="{Binding Vozen.AktualnaPoloha.AktualnaPolohaLatitude}"></TextBox>
@@ -103,7 +103,7 @@
                     <TextBox Name="TXTIDVoznaVyradenieZVlaku" Grid.Row="5" Grid.Column="1" Margin="5"/>
                     <Button Margin="5" Grid.Row="6" Grid.Column="1" Content="Vyraď vozeň z vlaku" Click="Button_Click_3"/>
 
-                  
+
                 </Grid>
             </TabItem>
             <TabItem Header="Zmena polohy vozňa">
@@ -146,7 +146,7 @@
                     <TextBox Name="TXTIDKolaje" Grid.Row="5" Grid.Column="1" Margin="5"/>
                     <Button Margin="5" Grid.Row="9" Grid.Column="1" Content="Postav vozeň na koľaj" Click="Button_Click_5" />
                 </Grid>
-                
+
             </TabItem>
             <TabItem Header="Report">
                 <Grid>
@@ -201,7 +201,7 @@
                     <Image Name="IMGFotka" Grid.Row="4" Grid.ColumnSpan="2" Grid.RowSpan="2" Grid.Column="0"  />
 
                 </Grid>
-                
+
             </TabItem>
             <TabItem Header="Zmestnanec pridaj">
                 <Grid>
@@ -226,11 +226,27 @@
                     <TextBox Name="TXTPriezviskoZamestnancaNew" Text="{Binding ZamestnanecNovy.Priezvisko}" Margin="5" Grid.Row="1" Grid.Column="1"/>
                     <Button Margin="5" Grid.Row="2" Grid.Column="1" Click="Button_Click_7">Vybrať fotku</Button>
 
-                    
+
                     <Image Name="IMGNovyZamestnanec" Grid.Row="3" Grid.RowSpan="2" Grid.Column="0" Grid.ColumnSpan="2" />
                     <Button Margin="5" Grid.Row="5" Grid.Column="1" Click="Button_Click_8">Pridaj nového zamestnanca</Button>
                 </Grid>
 
+            </TabItem>
+            <TabItem Header="Štatistiky zamestnanec">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="0.1*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <DataGrid Grid.Row="0" Grid.ColumnSpan="2" Name="ReportDataGridZamestnanec"/>
+                    <Button Margin="5" Grid.Column="1" Grid.Row="1" Click="Button_Click_10">Vypíš štatistiky</Button>
+
+                </Grid>
             </TabItem>
         </TabControl>
 

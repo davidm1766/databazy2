@@ -203,5 +203,10 @@ namespace Core
             v.AktualnaPoloha = new Poloha() {AktualnaPolohaLatitude=ret.Item2,AktualnaPolohaLongitude=ret.Item3 };
             return v;
         }
+
+        public DataSet VypisStatistikyOZamestnancoch()
+        {
+            return _volanieFunkcii.VypisStatistikyOZamestnancoch();
+        }
     }
 }
